@@ -41,7 +41,7 @@ const image: string = (images[props.imageSrc] as string) || props.imageSrc;
     </div>
     <div class="flex flex-col w-full justify-start items-start">
       <p>{{props.title}}</p>
-      <p>{{props.price}}$</p>
+      <p class="font-bold">{{props.price}}$</p>
     </div>
   </div>
 </template>

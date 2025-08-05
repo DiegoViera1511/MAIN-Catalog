@@ -34,7 +34,3 @@ onMounted(async () => {
     />
   </ProductsContainer>
 </template>
-
-<style scoped>
-
-</style>
