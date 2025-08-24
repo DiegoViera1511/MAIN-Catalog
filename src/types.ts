@@ -5,9 +5,11 @@ export enum Category {
 }
 
 export interface ProductType {
+    id:number,
     url:string,
     title:string,
     description:string,
     price:number,
-    category:Category
+    category: string
+    sizes: string[]
 }
