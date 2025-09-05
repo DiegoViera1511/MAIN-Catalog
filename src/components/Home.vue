@@ -25,7 +25,4 @@ onMounted(() => {
         :interval="3000"
     />
   </div>
-  <button class="fixed top-30 right-2 bg-gray-200 dark:bg-neutral-900 rounded-full p-4">
-    <MessageCircle class="text-green-500"/>
-  </button>
 </template>

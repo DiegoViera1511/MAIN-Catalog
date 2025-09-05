@@ -13,3 +13,12 @@ export interface ProductType {
     category: string
     sizes: string[]
 }
+
+export interface CartProduct {
+    id:number,
+    url:string,
+    title:string,
+    price:number,
+    selectedSize: string,
+    quantity: number,
+}

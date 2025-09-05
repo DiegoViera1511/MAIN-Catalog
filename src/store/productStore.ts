@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import type {ProductType} from "../types.ts";
+import type {CartProduct, ProductType} from "../types.ts";
 
 interface ProductState {
     allProducts: ProductType[];
-    cart: ProductType[];
+    cart: CartProduct[];
 }
 
 export const useProductStore = defineStore('products', {
@@ -20,8 +20,15 @@ export const useProductStore = defineStore('products', {
         }
     },
     actions: {
-        addToCart(product: ProductType) {
-            this.cart.push(product)
+        addToCart(product: CartProduct) {
+            const productInCart = this.cart.find(
+                item => item.id === product.id && item.selectedSize === product.selectedSize
+            );
+            if (productInCart) {
+                productInCart.quantity += product.quantity;
+            } else {
+                this.cart.push(product);
+            }
         },
         removeFromCart(id: number) {
             this.cart = this.cart.filter(item => item.id !== id)

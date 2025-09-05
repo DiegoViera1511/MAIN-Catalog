@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Category } from '../types';
-import {type PropType} from "vue";
 
 const props = defineProps({
   imageSrc:{
@@ -39,7 +38,7 @@ const image: string = (images[props.imageSrc] as string) || props.imageSrc;
     <div class="flex bg-gray-100 w-full justify-center h-[400px]">
       <img :src="image" alt="">
     </div>
-    <div class="flex flex-col w-full justify-start items-start">
+    <div class="flex flex-col w-full justify-start items-start dark:text-white">
       <p>{{props.title}}</p>
       <p class="font-bold">{{props.price}}$</p>
     </div>
