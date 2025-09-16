@@ -51,12 +51,6 @@ function onCopy() {
 function copyInvoiceToClipboard() {
   const invoiceText = getInvoiceText();
   navigator.clipboard.writeText(invoiceText)
-      .then(() => {
-        // Optionally show a success message
-      })
-      .catch(() => {
-        // Optionally handle errors
-      });
   onCopy()
 }
 

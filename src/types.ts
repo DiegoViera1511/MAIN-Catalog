@@ -10,8 +10,9 @@ export interface ProductType {
     title:string,
     description:string,
     price:number,
-    category: string
-    sizes: string[]
+    category: string[],
+    sizes: string[],
+    stock: number,
 }
 
 export interface CartProduct {

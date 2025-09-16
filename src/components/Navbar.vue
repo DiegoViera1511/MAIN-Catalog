@@ -1,14 +1,16 @@
 <script setup lang="ts">
-  import { ref, onMounted, onUnmounted } from 'vue';
+import {ref, onMounted, onUnmounted, computed} from 'vue';
   import {Menu, X, ShoppingCart} from "lucide-vue-next";
   import {useProductStore} from "../store/productStore.ts";
   import type {CartProduct} from "../types.ts";
-  import {useRouter} from "vue-router";
+  import {useRouter,useRoute} from "vue-router";
 
   const isMobile = ref(false);
   const openMenu = ref(false);
   const isDarkMode = ref(false);
   const cartProducts = ref<CartProduct[]>([])
+  const route = useRoute();
+  const showCartButton = computed(() => route.path !== '/cart');
 
   onMounted(() => {
     const store = useProductStore()
@@ -60,21 +62,21 @@
         <p class="hover:text-blue-800 font-medium cursor-pointer">Mujer</p>
         <p class="hover:text-blue-800 font-medium cursor-pointer">Accesorios</p>
       </div>
-      <button @click="goCart">
-        <ShoppingCart class="hover:text-orange-600 cursor-pointer" :size="30"/>
+      <button v-show="showCartButton" @click="goCart">
+        <ShoppingCart class="cursor-pointer" :size="30"/>
       </button>
     </div>
     <div v-show="isMobile" class="flex flex-row items-center justify-between p-6 px-4 w-full gap-4">
       <button @click="onClickMenu">
-        <Menu class="hover:text-orange-600 cursor-pointer" :size="30"/>
+        <Menu class=" cursor-pointer" :size="30"/>
       </button>
       <div class="flex items-center justify-between w-[40px] h-[40px]">
         <img v-show="isDarkMode" src="../../public/logo 2.png" alt="">
         <img v-show="!isDarkMode" src="../../public/logo 3.png" alt="">
       </div>
       <div class="items-center justify-center gap-4 ">
-        <button @click="goCart">
-          <ShoppingCart class="hover:text-orange-600 cursor-pointer" :size="30"/>
+        <button v-show="showCartButton" @click="goCart">
+          <ShoppingCart class=" cursor-pointer" :size="30"/>
         </button>
       </div>
     </div>

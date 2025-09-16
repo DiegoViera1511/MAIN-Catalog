@@ -23,9 +23,9 @@ const props = defineProps({
     default: 0.0
   },
   category:{
-    type: String,
+    type: Array,
     required: true,
-    default: Category.ACCESSORIES
+    default: () => []
   }
 });
 

@@ -1,0 +1,56 @@
+<script setup lang="ts">
+import AdminLayout from "@/layouts/AdminLayout.vue";
+import {onMounted, ref} from "vue";
+import type {ProductType} from "@/types.ts";
+import {supabase} from "@/lib/supabase.ts";
+import AlertDialogDeleteProduct from "@/components/AlertDialogDeleteProduct.vue";
+import {LoaderCircle} from "lucide-vue-next";
+
+const products = ref<ProductType[]>([])
+const loading = ref<boolean>(true)
+
+onMounted( async () => {
+  try {
+    let { data, error } = await supabase
+        .from('product')
+        .select('*')
+    if (error) {
+      console.log(error)
+    }
+    products.value = data as ProductType[]
+  } catch (err) {
+    console.log(err)
+  } finally {
+    loading.value = false
+  }
+})
+</script>
+
+<template>
+  <AdminLayout>
+    <div v-if="loading" class="flex justify-center w-full items-center h-52">
+      <div class="flex dark:text-white items-center justify-center  w-full">
+        <LoaderCircle class="animate-spin" :size="50" />
+      </div>
+    </div>
+    <div class="flex flex-col gap-6 items-center justify-center w-full">
+      <div
+          class="flex flex-col items-center border-b-2 pb-3 border-b-gray-200 dark:text-white dark:border-b-gray-700 gap-4 w-full justify-between"
+          v-for="(product,index) in products"
+          :key="index"
+      >
+        <div class="flex flex-row w-full justify-between sm:justify-start gap-4 items-center">
+          <img :src="product.url" alt="product image" class="w-[150px] h-[150px] object-cover rounded-md"/>
+          <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
+            <span>{{ product.title }}</span>
+          </div>
+        </div>
+          <AlertDialogDeleteProduct :productId="product.id" :productUrl="product.url" />
+      </div>
+    </div>
+  </AdminLayout>
+</template>
+
+<style scoped>
+
+</style>

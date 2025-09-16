@@ -1,14 +1,11 @@
 <script setup lang="ts">
-  import Navbar from "./components/Navbar.vue";
-  import Footer from "./components/Footer.vue";
+import { Toaster } from '@/components/ui/sonner'
+import 'vue-sonner/style.css' // vue-sonner v2 requires this import
 </script>
 
 <template>
+  <Toaster />
   <div class="flex flex-col min-h-screen bg-slate-50 dark:bg-neutral-900">
-    <Navbar />
-    <div class="flex-grow mt-24 mb-28">
-      <router-view></router-view>
-    </div>
-    <Footer />
+    <router-view></router-view>
   </div>
 </template>

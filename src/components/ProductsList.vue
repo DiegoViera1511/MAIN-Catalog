@@ -5,18 +5,24 @@ import {ref, onMounted} from "vue";
 import type {ProductType} from "../types.ts";
 import { useProductStore } from '../store/productStore'
 import { useRouter } from "vue-router";
+import {supabase} from "@/lib/supabase.ts";
+import {LoaderCircle} from "lucide-vue-next";
 
-const productStore = useProductStore()
 const products = ref<ProductType[]>([])
+const productStore = useProductStore()
 const loading = ref(true)
 const error = ref("")
 const router = useRouter()
 
-onMounted(async () => {
+onMounted( async () => {
   try {
-    const response = await fetch('../../products.json')
-    console.log(response)
-    products.value = await response.json() as ProductType[]
+    let { data, error } = await supabase
+        .from('product')
+        .select('*')
+    if (error) {
+      console.log(error)
+    }
+    products.value = data as ProductType[]
     productStore.setProducts(products.value)
   } catch (err) {
     error.value = "error"
@@ -32,6 +38,11 @@ function goToProduct(productId: number) {
 </script>
 
 <template>
+  <div v-if="loading" class="flex justify-center w-full items-center h-52">
+    <div class="flex dark:text-white items-center justify-center  w-full">
+      <LoaderCircle class="animate-spin" :size="50" />
+    </div>
+  </div>
   <ProductsContainer>
     <Product
         v-for="(product, index) in products"
