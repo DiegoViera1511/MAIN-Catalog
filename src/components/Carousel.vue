@@ -18,7 +18,7 @@ const props = defineProps({
 });
 
 const currentSlide = ref(0);
-let autoPlayInterval = 0;
+let autoPlayInterval: ReturnType<typeof setInterval> | null = null;
 
 const carouselStyle = computed(() => ({
   transform: `translateX(-${currentSlide.value * 100}%)`
@@ -37,7 +37,7 @@ const goToSlide = (index: number) => {
 };
 
 const startAutoPlay = () => {
-  if (props.autoPlay) {
+  if (props.autoPlay && !autoPlayInterval) {
     autoPlayInterval = setInterval(nextSlide, props.interval);
   }
 };
@@ -45,7 +45,7 @@ const startAutoPlay = () => {
 const pauseAutoPlay = () => {
   if (autoPlayInterval) {
     clearInterval(autoPlayInterval);
-    autoPlayInterval = 0;
+    autoPlayInterval = null;
   }
 };
 
@@ -91,4 +91,3 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
-

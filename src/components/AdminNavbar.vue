@@ -2,10 +2,8 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import {useProductStore} from "../store/productStore.ts";
 import type {CartProduct} from "../types.ts";
-import {useRouter} from "vue-router";
 
 const isMobile = ref(false);
-const openMenu = ref(false);
 const isDarkMode = ref(false);
 const cartProducts = ref<CartProduct[]>([])
 
@@ -16,20 +14,6 @@ onMounted(() => {
 
 function updateDarkMode() {
   isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
-
-function onClickMenu() {
-  openMenu.value = !openMenu.value;
-}
-
-const router = useRouter();
-
-function goHome() {
-  onClickMenu();
-  router.push('/');
-}
-function goCart() {
-  router.push('/cart');
 }
 
 onMounted(() => {

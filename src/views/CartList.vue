@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import {useProductStore} from "../store/productStore.ts";
-import {Minus, Plus, Trash,ArrowLeft} from "lucide-vue-next";
+import {Minus, Plus, Trash} from "lucide-vue-next";
 import {onMounted, ref} from "vue";
 import type {CartProduct} from "../types.ts";
 import InvoiceDialog from "@/components/InvoiceDialog.vue";
 import StoreLayout from "@/layouts/StoreLayout.vue";
-import {Button} from "@/components/ui/button";
 
 const cartProducts = ref<CartProduct[]>([])
 

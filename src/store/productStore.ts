@@ -16,7 +16,7 @@ export const useProductStore = defineStore('products', {
             return state.allProducts.find(p => p.id === id)
         },
         productsByCategory: (state) => (category: string) => {
-            return state.allProducts.filter(p => p.category === category)
+            return state.allProducts.filter(p => p.category.includes(category))
         }
     },
     actions: {

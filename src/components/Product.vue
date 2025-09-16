@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Category } from '../types';
 
 const props = defineProps({
   imageSrc:{
