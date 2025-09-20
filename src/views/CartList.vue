@@ -21,18 +21,18 @@ function getCartCount() {
   return cartProducts.value.reduce((sum, product) => sum + product.quantity, 0);
 }
 
-function removeProduct(id: number) {
-  cartProducts.value = cartProducts.value.filter(p => p.id !== id)
+function removeProduct(id: number,selectedSize: string) {
+  cartProducts.value = cartProducts.value.filter(p => !(p.id === id && p.selectedSize === selectedSize));
 }
 
 </script>
 
 <template>
-  <StoreLayout>
+  <StoreLayout :showFooter="false">
     <div
         class="flex flex-col transition-all dark:bg-neutral-900 dark:text-white px-4 duration-200 gap-4 justify-start w-full h-full items-start"
     >
-      <h1 class="font-bold text-xl">Lista de Compra</h1>
+      <h1 class="font-bold text-2xl">Lista de Compra</h1>
       <div class="flex flex-row gap-2 w-full items-center justify-start text-xl"
            v-if="getCartCount() > 0"
       >
@@ -71,10 +71,10 @@ function removeProduct(id: number) {
                 @click="() => {
                    if (product.quantity > 1){
                       product.quantity--;
-                   }else if (product.quantity == 1) {
+                   } else if (product.quantity == 1) {
                      const store = useProductStore();
-                     store.removeFromCart(product.id);
-                     removeProduct(product.id);
+                     store.removeFromCart(product.id, product.selectedSize);
+                     removeProduct(product.id, product.selectedSize);
                    }
                  }"
             >
@@ -86,7 +86,7 @@ function removeProduct(id: number) {
       </div>
     </div>
     <div
-        class="flex flex-col fixed w-full z-10 dark:text-white sm:h-48 p-7 gap-8 bottom-0 items-center justify-center border-t-2 dark:border-t-gray-700 border-t-gray-200 bg-slate-50 dark:bg-neutral-900"
+        class="flex flex-col fixed w-full z-10 dark:text-white sm:h-48 gap-8 p-5 bottom-0 items-center justify-center"
         v-if="cartProducts.length > 0"
     >
       <InvoiceDialog/>

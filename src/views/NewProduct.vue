@@ -91,79 +91,79 @@ const inputClass = "w-full bg-gray-200 dark:text-white dark:bg-neutral-700 round
 </script>
 
 <template>
-<AdminLayout>
-  <div class="max-w-md mx-auto">
-    <h2 class="text-xl font-bold mb-4 dark:text-white">Nuevo producto</h2>
-    <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
-      <div>
-        <label :class="labelClass">Título</label>
-        <input v-model="title" :class="inputClass" required />
-      </div>
-      <hr class="w-full"/>
-      <div>
-        <label :class="labelClass">Descripción</label>
-        <textarea v-model="description" :class="inputClass" required></textarea>
-      </div>
-      <hr class="w-full"/>
-      <div>
-        <label :class="labelClass">Precio</label>
-        <input v-model.number="price" type="number" min="0" step="0.01" :class="inputClass" required />
-      </div>
-      <hr class="w-full"/>
-      <div>
-        <label :class="labelClass">Categoría</label>
-        <div class="flex gap-4 dark:text-white">
-          <label class="flex items-center gap-1">
-            <input type="checkbox" value="MEN" v-model="category" class="w-6 h-6 accent-black" />
-            Hombre
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" value="WOMEN" v-model="category" class="w-6 h-6 accent-black" />
-            Mujer
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" value="ACCESSORIES" v-model="category" class="w-6 h-6 accent-black" />
-            Accesorio
-          </label>
+  <AdminLayout>
+    <div class="max-w-md mx-auto">
+      <h2 class="text-xl font-bold mb-4 dark:text-white">Nuevo producto</h2>
+      <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
+        <div>
+          <label :class="labelClass">Título</label>
+          <input v-model="title" :class="inputClass" required />
         </div>
-      </div>
-      <hr class="w-full"/>
-      <div>
-        <label :class="labelClass">Tallas disponibles</label>
-        <div class="flex gap-3 dark:text-white">
-          <label v-for="size in availableSizes" :key="size" class="flex items-center gap-1">
-            <input type="checkbox" :value="size" v-model="selectedSizes" class="w-6 h-6 accent-black" /> {{ size }}
-          </label>
+        <hr class="w-full"/>
+        <div>
+          <label :class="labelClass">Descripción</label>
+          <textarea v-model="description" :class="inputClass" required></textarea>
         </div>
-      </div>
-      <hr class="w-full"/>
-      <label :class="labelClass">Imagen</label>
-      <div class="flex flex-col gap-2 mb-4 bg-gray-200 dark:bg-neutral-700 rounded-md p-3">
-        <div v-if="imagePreview" class="flex justify-center mb-2">
-            <img :src="imagePreview" alt="Vista previa" class="w-[150px] h-[150px] object-cover rounded" />
+        <hr class="w-full"/>
+        <div>
+          <label :class="labelClass">Precio</label>
+          <input v-model.number="price" type="number" min="0" step="0.01" :class="inputClass" required />
         </div>
-        <input
-            id="image-input"
-            ref="fileInput"
-            type="file"
-            accept="image/*"
-            class="dark:text-white"
-            @change="handleFileChange"
-        />
-        <Button type="button" @click.prevent="triggerFileInput">
-          Seleccionar
-        </Button>
+        <hr class="w-full"/>
+        <div>
+          <label :class="labelClass">Categoría</label>
+          <div class="flex gap-4 dark:text-white">
+            <label class="flex items-center gap-1">
+              <input type="checkbox" value="MEN" v-model="category" class="w-6 h-6 accent-black" />
+              Hombre
+            </label>
+            <label class="flex items-center gap-1">
+              <input type="checkbox" value="WOMEN" v-model="category" class="w-6 h-6 accent-black" />
+              Mujer
+            </label>
+            <label class="flex items-center gap-1">
+              <input type="checkbox" value="ACCESSORIES" v-model="category" class="w-6 h-6 accent-black" />
+              Accesorio
+            </label>
+          </div>
+        </div>
+        <hr class="w-full"/>
+        <div>
+          <label :class="labelClass">Tallas disponibles</label>
+          <div class="flex gap-3 dark:text-white">
+            <label v-for="size in availableSizes" :key="size" class="flex items-center gap-1">
+              <input type="checkbox" :value="size" v-model="selectedSizes" class="w-6 h-6 accent-black" /> {{ size }}
+            </label>
+          </div>
+        </div>
+        <hr class="w-full"/>
+        <label :class="labelClass">Imagen</label>
+        <div class="flex flex-col gap-2 mb-4 bg-gray-200 dark:bg-neutral-700 rounded-md p-3">
+          <div v-if="imagePreview" class="flex justify-center mb-2">
+              <img :src="imagePreview" alt="Vista previa" class="w-[150px] h-[150px] object-cover rounded" />
+          </div>
+          <input
+              id="image-input"
+              ref="fileInput"
+              type="file"
+              accept="image/*"
+              class="dark:text-white"
+              @change="handleFileChange"
+          />
+          <Button type="button" @click.prevent="triggerFileInput">
+            Seleccionar
+          </Button>
+        </div>
+        <hr class="w-full"/>
+        <button type="submit" :disabled="loading" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+          {{ loading ? 'Creando...' : 'Crear producto' }}
+        </button>
+      </form>
+      <div v-if="message" class="mt-4 text-center" :class="{'text-green-600': message.includes('exitosamente'), 'text-red-600': message.includes('Error')}">
+        {{ message }}
       </div>
-      <hr class="w-full"/>
-      <button type="submit" :disabled="loading" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-        {{ loading ? 'Creando...' : 'Crear producto' }}
-      </button>
-    </form>
-    <div v-if="message" class="mt-4 text-center" :class="{'text-green-600': message.includes('exitosamente'), 'text-red-600': message.includes('Error')}">
-      {{ message }}
     </div>
-  </div>
-</AdminLayout>
+  </AdminLayout>
 </template>
 
 <style scoped>

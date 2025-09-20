@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref, onMounted, onUnmounted, computed} from 'vue';
-  import {Menu, X, ShoppingCart} from "lucide-vue-next";
+  import {Menu, X, ShoppingCart,Phone} from "lucide-vue-next";
   import {useProductStore} from "../store/productStore.ts";
   import type {CartProduct} from "../types.ts";
   import {useRouter,useRoute} from "vue-router";
@@ -27,12 +27,39 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
 
   const router = useRouter();
 
+  const store = useProductStore();
+  const cartCount = computed(() => store.cart.reduce((sum, product) => sum + product.quantity, 0));
+
   function goHome() {
-    onClickMenu();
+    if (isMobile.value) {
+      onClickMenu();
+    }
     router.push('/');
+  }
+  function goMen() {
+    if (isMobile.value) {
+      onClickMenu();
+    }
+    router.push('/men');
+  }
+  function goWoman() {
+    if (isMobile.value) {
+      onClickMenu();
+    }
+    router.push('/women');
+  }
+  function goAccesories() {
+    if (isMobile.value) {
+      onClickMenu();
+    }
+    router.push('/accessories');
   }
   function goCart() {
     router.push('/cart');
+  }
+
+  function goContact() {
+    router.push('/contact');
   }
   
   onMounted(() => {
@@ -57,13 +84,37 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
         <img v-show="!isDarkMode" src="../../public/logo 3.png" alt="">
       </div>
       <div class="flex flex-row w-full items-center justify-center gap-4 p-6">
-        <p class="hover:text-blue-800 font-medium cursor-pointer">Todo</p>
-        <p class="hover:text-blue-800 font-medium cursor-pointer">Hombre</p>
-        <p class="hover:text-blue-800 font-medium cursor-pointer">Mujer</p>
-        <p class="hover:text-blue-800 font-medium cursor-pointer">Accesorios</p>
+        <p
+            class="hover:text-blue-800 font-medium cursor-pointer"
+            @click="goHome"
+        >
+          Todo
+        </p>
+        <p
+            class="hover:text-blue-800 font-medium cursor-pointer"
+            @click="goMen"
+        >
+          Hombre
+        </p>
+        <p
+            class="hover:text-blue-800 font-medium cursor-pointer"
+            @click="goWoman"
+        >
+          Mujer
+        </p>
+        <p
+            class="hover:text-blue-800 font-medium cursor-pointer"
+            @click="goAccesories"
+        >
+          Accesorios
+        </p>
       </div>
-      <button v-show="showCartButton" @click="goCart">
-        <ShoppingCart class="cursor-pointer" :size="30"/>
+      <button v-show="showCartButton" @click="goCart" class="relative">
+        <ShoppingCart class=" cursor-pointer" :size="30"/>
+        <span v-if="cartCount > 0" class="absolute -top-2 -right-2 bg-cyan-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ cartCount }}</span>
+      </button>
+      <button v-show="!showCartButton" @click="goContact">
+        <Phone class="cursor-pointer" :size="30"/>
       </button>
     </div>
     <div v-show="isMobile" class="flex flex-row items-center justify-between p-6 px-4 w-full gap-4">
@@ -78,6 +129,9 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
         <button v-show="showCartButton" @click="goCart">
           <ShoppingCart class=" cursor-pointer" :size="30"/>
         </button>
+        <button v-show="!showCartButton" @click="goContact">
+          <Phone class="cursor-pointer" :size="30"/>
+        </button>
       </div>
     </div>
     <div 
@@ -88,17 +142,32 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
           <X/>
       </div>
       <div class="flex flex-col gap-3 text-2xl w-full">
-        <p class="hover:text-blue-800font-medium cursor-pointer"
+        <p class="hover:text-blue-800 font-medium cursor-pointer"
            @click="goHome"
         >
           Todo
         </p>
         <hr class="border-b border-gray-200" />
-        <p class="hover:text-blue-800 font-medium cursor-pointer">Hombre</p>
+        <p
+            class="hover:text-blue-800 font-medium cursor-pointer"
+            @click="goMen"
+        >
+          Hombre
+        </p>
         <hr class="border-b border-gray-200"/>
-        <p class="hover:text-blue-800 font-medium cursor-pointer">Mujer</p>
+        <p
+            class="hover:text-blue-800 font-medium cursor-pointer"
+            @click="goWoman"
+        >
+          Mujer
+        </p>
         <hr class="border-b border-gray-200"/>
-        <p class="hover:text-blue-800 font-medium cursor-pointer">Accesorios</p>
+        <p
+            class="hover:text-blue-800 font-medium cursor-pointer"
+            @click="goAccesories"
+        >
+          Accesorios
+        </p>
       </div>
     </div>
     <div

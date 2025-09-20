@@ -30,8 +30,9 @@ export const useProductStore = defineStore('products', {
                 this.cart.push(product);
             }
         },
-        removeFromCart(id: number) {
-            this.cart = this.cart.filter(item => item.id !== id)
+        removeFromCart(id: number, selectedSize: string) {
+            console.log(id + " " + selectedSize);
+            this.cart = this.cart.filter(item => !(item.id === id && item.selectedSize === selectedSize));
         },
         setProducts(products: ProductType[]) {
             this.allProducts = products

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ProductsContainer from "./ProductsContainer.vue";
 import Product from "./Product.vue";
-import {ref, onMounted} from "vue";
+import {ref, onMounted, computed} from "vue";
 import type {ProductType} from "../types.ts";
 import { useProductStore } from '../store/productStore'
 import { useRouter } from "vue-router";
@@ -14,6 +14,22 @@ const loading = ref(true)
 const error = ref("")
 const router = useRouter()
 
+function getCategoryFromRoute(path: string): string | null {
+  if (path.includes('/men')) return 'MEN';
+  if (path.includes('/women')) return 'WOMEN';
+  if (path.includes('/accessories')) return 'ACCESSORIES';
+  return null;
+}
+
+const filteredProducts = computed(() => {
+  const category = getCategoryFromRoute(router.currentRoute.value.path)
+  if (category) {
+    return products.value.filter(p => p.category.includes(category))
+  } else {
+    return products.value
+  }
+})
+
 onMounted( async () => {
   try {
     let { data, error } = await supabase
@@ -24,6 +40,7 @@ onMounted( async () => {
     }
     products.value = data as ProductType[]
     productStore.setProducts(products.value)
+
   } catch (err) {
     error.value = "error"
   } finally {
@@ -31,8 +48,9 @@ onMounted( async () => {
   }
 })
 
+
 function goToProduct(productId: number) {
-  router.push({ name: "ProductInfo", params: { id: productId } });
+  router.push("/product/" + productId);
 }
 
 </script>
@@ -45,8 +63,8 @@ function goToProduct(productId: number) {
   </div>
   <ProductsContainer>
     <Product
-        v-for="(product, index) in products"
-        :key="index"  
+        v-for="product in filteredProducts"
+        :key="product.id"
         :title="product.title"
         :description="product.description"
         :price="product.price"
