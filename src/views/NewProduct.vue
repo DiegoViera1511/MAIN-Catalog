@@ -62,6 +62,7 @@ const handleSubmit = async () => {
         price: price.value,
         category: category.value,
         sizes: selectedSizes.value,
+        stock: 0
       }
     ]);
     if (insertError) {
@@ -131,7 +132,7 @@ const inputClass = "w-full bg-gray-200 dark:text-white dark:bg-neutral-700 round
         <label :class="labelClass">Tallas disponibles</label>
         <div class="flex gap-3 dark:text-white">
           <label v-for="size in availableSizes" :key="size" class="flex items-center gap-1">
-            <input type="checkbox" :value="size" class="w-6 h-6 accent-black" /> {{ size }}
+            <input type="checkbox" :value="size" v-model="selectedSizes" class="w-6 h-6 accent-black" /> {{ size }}
           </label>
         </div>
       </div>
