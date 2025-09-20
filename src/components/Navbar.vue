@@ -126,8 +126,9 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
         <img v-show="!isDarkMode" src="../../public/logo 3.png" alt="">
       </div>
       <div class="items-center justify-center gap-4 ">
-        <button v-show="showCartButton" @click="goCart">
+        <button v-show="showCartButton" @click="goCart" class="relative">
           <ShoppingCart class=" cursor-pointer" :size="30"/>
+          <span v-if="cartCount > 0" class="absolute -top-2 -right-2 bg-cyan-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ cartCount }}</span>
         </button>
         <button v-show="!showCartButton" @click="goContact">
           <Phone class="cursor-pointer" :size="30"/>
