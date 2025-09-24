@@ -1,6 +1,31 @@
 <script setup lang="ts">
 import StoreLayout from "@/layouts/StoreLayout.vue";
 import {MessageCircle,Send,Instagram} from "lucide-vue-next";
+import {useProductStore} from "@/store/productStore.ts";
+import {computed} from "vue";
+
+const cartProducts = computed(() => {
+  const store = useProductStore();
+  return store.cart
+})
+
+function getCartTotal() {
+  return cartProducts.value.reduce((sum, product) => sum + product.price * product.quantity, 0).toFixed(2);
+}
+
+function getInvoiceText() {
+  const store = useProductStore();
+  const products = store.cart;
+  const lines = products.map(product => {
+    const lineTotal = (product.price * product.quantity).toFixed(2);
+    return `${product.title}%20${ product.selectedSize ? '%0ATalla:%20' + product.selectedSize : '' }%20%0ACantidad:%20${product.quantity}%20%0APrecio:%20${lineTotal}%20$%20%0A--------------------------------`;
+  });
+  if (products.length > 0) {
+    lines.push(`Total: ${getCartTotal()}%20$`);
+  }
+  return lines.join('%0A');
+}
+
 </script>
 
 <template>
@@ -11,7 +36,7 @@ import {MessageCircle,Send,Instagram} from "lucide-vue-next";
       <h1 class="font-bold text-2xl">Contactos</h1>
       <div class="flex flex-col gap-3 w-full">
         <a
-            href="https://wa.me/5355394122"
+            :href="`https://wa.me/5355394122?text=${getInvoiceText()}`"
             target="_blank"
             rel="noopener noreferrer"
         >
@@ -21,7 +46,7 @@ import {MessageCircle,Send,Instagram} from "lucide-vue-next";
           </div>
         </a>
         <a
-            href="https://t.me/Rafas_mood"
+            :href="`https://t.me/Rafas_mood?text=${getInvoiceText()}`"
             target="_blank"
             rel="noopener noreferrer"
         >

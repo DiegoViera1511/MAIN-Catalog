@@ -11,7 +11,7 @@ import {
 
 import {useProductStore} from "@/store/productStore.ts";
 import {computed, ref} from "vue";
-import {Check} from "lucide-vue-next";
+import {Check,Copy} from "lucide-vue-next";
 import {useRouter} from "vue-router";
 
 const copied = ref(false)
@@ -74,6 +74,15 @@ function goToContacts(){
           mensaje.
         </DialogDescription>
       </DialogHeader>
+      <div class="flex w-full items-center justify-end">
+        <button
+            class="bg-gray-100 rounded-full p-2 hover:bg-gray-200"
+            @click="copyInvoiceToClipboard"
+        >
+          <Copy v-if="!copied" :size="15"/>
+          <Check v-else :size="15"/>
+        </button>
+      </div>
       <div class="p-3 bg-gray-200 rounded-md max-h-96 overflow-scroll">
         <div
             class="flex flex-col"
@@ -90,14 +99,6 @@ function goToContacts(){
       </div>
       <DialogFooter>
         <div class="flex flex-col gap-2 w-full">
-          <button
-              class="bg-black gap-2 text-white w-full transition-all p-2 rounded flex items-center justify-center"
-              @click="copyInvoiceToClipboard"
-          >
-            <span v-show="!copied">Copiar Pedido</span>
-            <Check v-show="copied"/>
-          </button>
-          <hr class="border-b border-gray-200"/>
           <button
               class="bg-green-500 text-white w-full p-2 rounded"
               @click="goToContacts"
