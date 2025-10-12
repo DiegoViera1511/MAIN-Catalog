@@ -21,8 +21,8 @@ function getCartCount() {
   return cartProducts.value.reduce((sum, product) => sum + product.quantity, 0);
 }
 
-function removeProduct(id: number,selectedSize: string) {
-  cartProducts.value = cartProducts.value.filter(p => !(p.id === id && p.selectedSize === selectedSize));
+function removeProduct(id: number, selectedSize: string, selectedColor: string) {
+  cartProducts.value = cartProducts.value.filter(p => !(p.id === id && p.selectedSize === selectedSize && p.selectedColor === selectedColor));
 }
 
 </script>
@@ -54,7 +54,8 @@ function removeProduct(id: number,selectedSize: string) {
             <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
               <span>{{ product.price }} $</span>
               <span>{{ product.title }}</span>
-              <span>Size: {{ product.selectedSize }}</span>
+              <span v-if="product.selectedSize">Size: {{ product.selectedSize }}</span>
+              <span>Color: {{ product.selectedColor }}</span>
             </div>
           </div>
           <div
@@ -73,8 +74,8 @@ function removeProduct(id: number,selectedSize: string) {
                       product.quantity--;
                    } else if (product.quantity == 1) {
                      const store = useProductStore();
-                     store.removeFromCart(product.id, product.selectedSize);
-                     removeProduct(product.id, product.selectedSize);
+                     store.removeFromCart(product.id, product.selectedSize, product.selectedColor);
+                     removeProduct(product.id, product.selectedSize, product.selectedColor);
                    }
                  }"
             >

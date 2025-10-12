@@ -22,7 +22,7 @@ export const useProductStore = defineStore('products', {
     actions: {
         addToCart(product: CartProduct) {
             const productInCart = this.cart.find(
-                item => item.id === product.id && item.selectedSize === product.selectedSize
+                item => item.id === product.id && item.selectedSize === product.selectedSize && item.selectedColor === product.selectedColor
             );
             if (productInCart) {
                 productInCart.quantity += product.quantity;
@@ -30,9 +30,8 @@ export const useProductStore = defineStore('products', {
                 this.cart.push(product);
             }
         },
-        removeFromCart(id: number, selectedSize: string) {
-            console.log(id + " " + selectedSize);
-            this.cart = this.cart.filter(item => !(item.id === id && item.selectedSize === selectedSize));
+        removeFromCart(id: number, selectedSize: string, selectedColor: string) {
+            this.cart = this.cart.filter(item => !(item.id === id && item.selectedSize === selectedSize && item.selectedColor === selectedColor));
         },
         setProducts(products: ProductType[]) {
             this.allProducts = products

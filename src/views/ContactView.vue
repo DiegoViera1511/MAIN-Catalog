@@ -18,7 +18,7 @@ function getInvoiceText() {
   const products = store.cart;
   const lines = products.map(product => {
     const lineTotal = (product.price * product.quantity).toFixed(2);
-    return `${product.title}%20${ product.selectedSize ? '%0ATalla:%20' + product.selectedSize : '' }%20%0ACantidad:%20${product.quantity}%20%0APrecio:%20${lineTotal}%20$%20%0A--------------------------------`;
+    return `${product.title}%20${ product.selectedSize ? '%0ATalla:%20' + product.selectedSize : '' }%20%0AColor:%20${product.selectedColor}%20%20%0ACantidad:%20${product.quantity}%20%0APrecio:%20${lineTotal}%20$%20%0A------------------------------`;
   });
   if (products.length > 0) {
     lines.push(`Total: ${getCartTotal()}%20$`);
@@ -42,7 +42,7 @@ function getInvoiceText() {
         >
           <div class="flex flex-row gap-2 shadow items-center justify-start text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full">
             <MessageCircle class="text-green-500"/>
-            <p class="font-medium text-xl">+53 5539 4122</p>
+            <p class="font-medium text-xl">+53 55394122</p>
           </div>
         </a>
         <a
@@ -55,6 +55,7 @@ function getInvoiceText() {
             <p class="font-medium text-xl">@Rafas_mood</p>
           </div>
         </a>
+        <h1 class="font-bold text-2xl">Redes Sociales</h1>
         <a
             href="https://www.instagram.com/main_activewear?igsh=OWc0MG41YmNxYWdl&utm_source=qr"
             target="_blank"

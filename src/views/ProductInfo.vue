@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import type {CartProduct, ProductType} from "../types.ts";
+import {computed, onMounted, ref} from "vue";
+import {BgColors, type CartProduct, Colors, type ProductType} from "../types.ts";
 import {useProductStore} from "../store/productStore.ts";
 import {useRoute} from "vue-router";
-import {Plus, Minus} from "lucide-vue-next"
+import {Plus, Minus, Check} from "lucide-vue-next"
 import StoreLayout from "@/layouts/StoreLayout.vue";
 import {Button} from "@/components/ui/button";
 import {toast} from "vue-sonner";
 
 const product = ref<ProductType | undefined>(undefined)
 const selectedSize = ref<number>(0)
+const selectedColor = ref<string>("")
+const checkColor = computed(() => selectedColor.value)
 const quantity = ref<number>(1)
 const route = useRoute()
 
@@ -17,18 +19,20 @@ onMounted(() => {
   const store = useProductStore()
   const productId = parseInt(route.params.id as string, 10);
   product.value = store.getProductById(productId);
+  selectedColor.value = product.value?.colors[0] || "";
 })
 
 function addProductToCart(){
   const store = useProductStore()
-  if (!product.value) return
+  if (!product.value) return;
   const cartProduct: CartProduct = {
     id: product.value.id,
     url: product.value.url,
     title: product.value.title,
     price: product.value.price,
     selectedSize: product.value.sizes[selectedSize.value],
-    quantity: quantity.value
+    quantity: quantity.value,
+    selectedColor: selectedColor.value || "",
   };
   store.addToCart(cartProduct);
   toast.success(`Añadido al pedido`, {
@@ -36,18 +40,35 @@ function addProductToCart(){
   });
 }
 
+function handleColorChange(color: string) {
+  selectedColor.value = color;
+}
+
 </script>
 
 <template>
   <StoreLayout>
     <div class="flex justify-center dark:text-white p-4 items-start w-full">
-      <div v-if="product" class="flex flex-col gap-2">
+      <div v-if="product" class="flex flex-col gap-4">
         <div class="flex bg-gray-100 w-full justify-center h-[400px]">
           <img :src="product.url" alt="product image"/>
         </div>
-        <h1 class="font-medium text-xl">{{ product.title }}</h1>
-        <p class="text-xl font-bold">Precio: {{ product.price }} $</p>
-        <p>{{ product.description }}</p>
+        <h1 class="font-bold text-xl">{{ product.title }}</h1>
+        <p class="text-xl font-medium">Precio: {{ product.price }} $</p>
+        <p class="text-xl font-medium" >{{ product.description }}</p>
+        <p class="text-xl font-medium">Color: {{checkColor}}</p>
+        <div
+            class="grid grid-cols-5 place-items-center w-full gap-5 p-2"
+        >
+          <div
+              v-for="(color , index) in product.colors"
+              :key="index"
+              :class="`flex items-center justify-center w-10 h-10 border-2  rounded-full ${BgColors[color as Colors]} cursor-pointer`"
+              @click="handleColorChange(color)"
+          >
+            <Check v-if="checkColor === color" :color="color === 'white' ? 'black' : 'white'"/>
+          </div>
+        </div>
         <div class="grid grid-cols-5">
           <div
               v-for="(size, index) in product.sizes"
@@ -59,7 +80,7 @@ function addProductToCart(){
             {{size}}
           </div>
         </div>
-        <div class="flex flex-row items-center mt-3 cursor-pointer border-2 gap-4 border-gray-200 rounded-full justify-center w-fit">
+        <div class="flex flex-row items-center cursor-pointer border-2 gap-4 border-gray-200 rounded-full justify-center w-fit">
           <button class="flex items-center hover:bg-gray-100 justify-center rounded-full p-4"
                   @click="() => quantity++"
           >

@@ -31,7 +31,7 @@ function getInvoiceText() {
   const products = store.cart;
   const lines = products.map(product => {
     const lineTotal = (product.price * product.quantity).toFixed(2);
-    return `${product.title} ${ product.selectedSize ? '\nTalla: ' + product.selectedSize : '' } \nCantidad: ${product.quantity} \nPrecio: ${lineTotal} $\n--------------------------------`;
+    return `${product.title} ${ product.selectedSize ? '\nTalla: ' + product.selectedSize : '' }\nColor: ${product.selectedColor} \nCantidad: ${product.quantity} \nPrecio: ${lineTotal} $\n------------------------------`;
   });
   lines.push(`Total: ${getCartTotal()} $`);
   return lines.join('\n');
@@ -91,6 +91,7 @@ function goToContacts(){
         >
           <p>Nombre: {{ product.title }}.</p>
           <p v-if="product.selectedSize">Talla: {{ product.selectedSize }}</p>
+          <p>Color: {{ product.selectedColor }}</p>
           <p>Cantidad: {{ product.quantity }}</p>
           <p>Costo: {{ product.price }} $</p>
           <p>----------------------</p>
@@ -100,7 +101,7 @@ function goToContacts(){
       <DialogFooter>
         <div class="flex flex-col gap-2 w-full">
           <button
-              class="bg-green-500 text-white w-full p-2 rounded"
+              class="bg-green-500 text-white w-full p-2 rounded-full"
               @click="goToContacts"
           >
             Contactar Administrador

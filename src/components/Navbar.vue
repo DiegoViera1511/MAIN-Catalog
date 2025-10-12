@@ -117,7 +117,7 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
         <Phone class="cursor-pointer" :size="30"/>
       </button>
     </div>
-    <div v-show="isMobile" class="flex flex-row items-center justify-between p-6 px-4 w-full gap-4">
+    <div v-show="isMobile" class="flex flex-row items-center justify-between p-4 w-full gap-4">
       <button @click="onClickMenu">
         <Menu class=" cursor-pointer" :size="30"/>
       </button>
