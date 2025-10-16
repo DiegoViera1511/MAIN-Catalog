@@ -7,6 +7,7 @@ import {Plus, Minus, Check} from "lucide-vue-next"
 import StoreLayout from "@/layouts/StoreLayout.vue";
 import {Button} from "@/components/ui/button";
 import {toast} from "vue-sonner";
+import Carousel from "@/components/Carousel.vue";
 
 const product = ref<ProductType | undefined>(undefined)
 const selectedSize = ref<number>(0)
@@ -50,8 +51,14 @@ function handleColorChange(color: string) {
   <StoreLayout>
     <div class="flex justify-center dark:text-white p-4 items-start w-full">
       <div v-if="product" class="flex flex-col gap-4">
-        <div class="flex bg-gray-100 w-full justify-center h-[400px]">
-          <img :src="product.url" alt="product image"/>
+        <div
+            v-if="product.images.length === 1"
+            class="flex bg-gray-100 w-full sm:w-[400px] justify-center"
+        >
+          <img class="object-cover" :src="product.url" alt="product image"/>
+        </div>
+        <div v-else class="flex w-full">
+          <Carousel :images="product.images"/>
         </div>
         <h1 class="font-bold text-xl">{{ product.title }}</h1>
         <p class="text-xl font-medium">Precio: {{ product.price }} $</p>
@@ -95,7 +102,7 @@ function handleColorChange(color: string) {
             <Minus :class="quantity == 1 ? 'text-gray-300' : ''"/>
           </button>
         </div>
-        <Button class="bg-black text-white dark:text-black dark:bg-white hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-md"
+        <Button class="bg-black text-white dark:text-black dark:bg-white hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
              @click="addProductToCart"
         >
           Añadir al Pedido

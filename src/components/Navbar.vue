@@ -77,7 +77,7 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
 </script>
 
 <template>
-  <div class="w-full fixed items-center bg-slate-50  dark:bg-neutral-900 dark:text-white">
+  <div class="w-full fixed z-30 items-center bg-slate-50 dark:bg-neutral-900 dark:text-white">
     <div v-show="!isMobile" class="flex flex-row px-8 items-center justify-around w-full gap-4">
       <div class="flex items-center justify-between w-[50px] h-[70px]">
         <img v-show="isDarkMode" src="../../public/logo 2.png" alt="">
@@ -136,7 +136,7 @@ import {ref, onMounted, onUnmounted, computed} from 'vue';
       </div>
     </div>
     <div 
-        class="flex fixed flex-col p-6 px-4 top-0 transition-all w-[80%] z-30 dark:bg-neutral-900 dark:text-white shadow-md py-7 duration-200 gap-6 justify-start trans h-full items-start bg-white"
+        class="flex fixed z-30 flex-col p-6 px-4 top-0 transition-all w-[80%] dark:bg-neutral-900 dark:text-white shadow-md py-7 duration-200 gap-6 justify-start trans h-full items-start bg-white"
         :class="[openMenu ? 'left-0' : 'left-[-100%] overscroll-y-none']"
     >
       <div @click="onClickMenu" class="flex  w-fit items-center p-1 rounded-md justify-center">
