@@ -3,24 +3,49 @@ import {computed, onMounted, ref} from "vue";
 import {BgColors, type CartProduct, Colors, type ProductType} from "../types.ts";
 import {useProductStore} from "../store/productStore.ts";
 import {useRoute} from "vue-router";
-import {Plus, Minus, Check} from "lucide-vue-next"
+import {Plus, Minus, Check, LoaderCircle} from "lucide-vue-next"
 import StoreLayout from "@/layouts/StoreLayout.vue";
 import {Button} from "@/components/ui/button";
 import {toast} from "vue-sonner";
 import Carousel from "@/components/Carousel.vue";
+import {supabase} from "@/lib/supabase.ts";
 
 const product = ref<ProductType | undefined>(undefined)
 const selectedSize = ref<number>(0)
 const selectedColor = ref<string>("")
 const checkColor = computed(() => selectedColor.value)
 const quantity = ref<number>(1)
+const loading = ref<boolean>(true)
 const route = useRoute()
 
-onMounted(() => {
-  const store = useProductStore()
+async function fetchProduct(id: number) {
+  try {
+    loading.value = true;
+    const { data, error } = await supabase
+      .from('product')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error('Error fetching product:', error);
+      toast.error('Error al cargar el producto');
+      return;
+    }
+
+    product.value = data;
+    selectedColor.value = data?.colors[0] || "";
+  } catch (error) {
+    console.error('Error:', error);
+    toast.error('Error al cargar el producto');
+  } finally {
+    loading.value = false;
+  }
+}
+
+onMounted(async () => {
   const productId = parseInt(route.params.id as string, 10);
-  product.value = store.getProductById(productId);
-  selectedColor.value = product.value?.colors[0] || "";
+  await fetchProduct(productId);
 })
 
 function addProductToCart(){
@@ -50,7 +75,13 @@ function handleColorChange(color: string) {
 <template>
   <StoreLayout>
     <div class="flex justify-center dark:text-white p-4 items-start w-full">
-      <div v-if="product" class="flex flex-col gap-4">
+      <div v-if="loading" class="flex justify-center w-full items-center h-52">
+        <div class="flex dark:text-white items-center justify-center  w-full">
+          <LoaderCircle class="animate-spin" :size="50" />
+        </div>
+      </div>
+      <!-- Product content -->
+      <div v-else-if="product" class="flex flex-col gap-4">
         <div
             v-if="product.images.length === 1"
             class="flex bg-gray-100 w-full sm:w-[400px] justify-center"
@@ -108,8 +139,10 @@ function handleColorChange(color: string) {
           Añadir al Pedido
         </Button>
       </div>
+
+      <!-- Product not found -->
       <div v-else>
-        <p class="font-medium">Product not found.</p>
+        <p class="font-medium">Producto no encontrado.</p>
       </div>
     </div>
   </StoreLayout>
