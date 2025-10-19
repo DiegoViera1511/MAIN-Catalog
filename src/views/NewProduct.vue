@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import AdminLayout from '@/layouts/AdminLayout.vue'
 import {supabase} from '@/lib/supabase'
 import {Button} from '@/components/ui/button'
 import {toast} from 'vue-sonner'
