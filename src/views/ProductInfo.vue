@@ -84,11 +84,15 @@ function handleColorChange(color: string) {
       <div v-else-if="product" class="flex flex-col gap-4">
         <div
             v-if="product.images.length === 1"
-            class="flex bg-gray-100 w-full sm:w-[400px] justify-center"
+            class="flex items-center justify-center w-full"
         >
-          <img class="object-cover" :src="product.url" alt="product image"/>
+          <div
+              class="flex bg-gray-100 w-full sm:w-[400px]"
+          >
+            <img class="object-cover" :src="product.url" alt="product image"/>
+          </div>
         </div>
-        <div v-else class="flex items-center justify-center w-full ">
+        <div v-else class="flex items-center justify-center w-full">
           <div class="bg-gray-100 w-fit">
             <Carousel :images="product.images"/>
           </div>
@@ -110,8 +114,8 @@ function handleColorChange(color: string) {
             <Check v-if="checkColor === color" :color="color === 'white' ? 'black' : 'white'"/>
           </div>
         </div>
-        <div class="flex flex-col w-full sm:items-center justify-between sm:flex-row gap-4">
-          <div class="grid grid-cols-5  sm:w-1/2">
+        <div class="flex flex-col w-full sm:items-center sm:justify-between sm:flex-row gap-4">
+          <div v-if="product.sizes.length > 0" class="grid grid-cols-5 sm:w-1/2">
             <div
                 v-for="(size, index) in product.sizes"
                 :key="index"

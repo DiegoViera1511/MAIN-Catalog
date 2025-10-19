@@ -35,12 +35,12 @@ onMounted( async () => {
     let { data, error } = await supabase
         .from('product')
         .select('*')
+        .order('created_at',{ascending: false})
     if (error) {
       console.log(error)
     }
     products.value = data as ProductType[]
     productStore.setProducts(products.value)
-
   } catch (err) {
     error.value = "error"
   } finally {
