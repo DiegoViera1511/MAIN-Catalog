@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AdminLayout from "@/layouts/AdminLayout.vue";
 import {onMounted, ref} from "vue";
 import type {ProductType} from "@/types.ts";
 import {supabase} from "@/lib/supabase.ts";
@@ -9,11 +8,12 @@ import {LoaderCircle} from "lucide-vue-next";
 const products = ref<ProductType[]>([])
 const loading = ref<boolean>(true)
 
-onMounted( async () => {
+onMounted(async () => {
   try {
-    let { data, error } = await supabase
+    let {data, error} = await supabase
         .from('product')
         .select('*')
+        .order('created_at', {ascending: false})
     if (error) {
       console.log(error)
     }
@@ -24,31 +24,35 @@ onMounted( async () => {
     loading.value = false
   }
 })
+
+const onDeleted = (id: number) => {
+  // Refresh the products list after a product is deleted
+  products.value = products.value.filter(p => p.id !== id);
+}
+
 </script>
 
 <template>
-  <AdminLayout>
-    <div v-if="loading" class="flex justify-center w-full items-center h-52">
-      <div class="flex dark:text-white items-center justify-center  w-full">
-        <LoaderCircle class="animate-spin" :size="50" />
-      </div>
+  <div v-if="loading" class="flex justify-center w-full items-center h-52">
+    <div class="flex dark:text-white items-center justify-center w-full">
+      <LoaderCircle class="animate-spin" :size="50"/>
     </div>
-    <div class="flex flex-col gap-6 items-center justify-center w-full">
-      <div
-          class="flex flex-col items-center border-b-2 pb-3 border-b-gray-200 dark:text-white dark:border-b-gray-700 gap-4 w-full justify-between"
-          v-for="(product,index) in products"
-          :key="index"
-      >
-        <div class="flex flex-row w-full justify-between sm:justify-start gap-4 items-center">
-          <img :src="product.url" alt="product image" class="w-[150px] h-[150px] object-cover rounded-md"/>
-          <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
-            <span>{{ product.title }}</span>
-          </div>
+  </div>
+  <div v-else class="flex flex-col gap-6 items-center justify-center w-full">
+    <div
+        class="flex flex-col items-center border-b-2 pb-3 border-b-gray-200 dark:text-white dark:border-b-gray-700 gap-4 w-full justify-between"
+        v-for="(product,index) in products"
+        :key="index"
+    >
+      <div class="flex flex-row w-full justify-between sm:justify-start gap-4 items-center">
+        <img :src="product.url" alt="product image" class="w-[150px] h-[150px] object-cover rounded-md"/>
+        <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
+          <span>{{ product.title }}</span>
         </div>
-          <AlertDialogDeleteProduct :productId="product.id" :productUrl="product.url" />
       </div>
+      <AlertDialogDeleteProduct :productId="product.id" :productUrl="product.url" @deleted="() => onDeleted(product.id)"/>
     </div>
-  </AdminLayout>
+  </div>
 </template>
 
 <style scoped>

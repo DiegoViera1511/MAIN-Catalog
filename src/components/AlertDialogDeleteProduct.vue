@@ -25,7 +25,6 @@ const props = defineProps({
     type: String,
     required: true
   }
-
 })
 
 const loading = ref(false);
@@ -55,7 +54,7 @@ async function handleDelete() {
     if (imagePath) {
       const { error: imgError } = await supabase.storage.from("Products").remove([imagePath]);
       if (imgError) {
-
+        console.error(imgError);
       }
     }
     emit("deleted");
