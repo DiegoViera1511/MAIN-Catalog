@@ -88,12 +88,15 @@ function handleColorChange(color: string) {
         >
           <img class="object-cover" :src="product.url" alt="product image"/>
         </div>
-        <div v-else class="flex w-full">
-          <Carousel :images="product.images"/>
+        <div v-else class="flex items-center justify-center w-full ">
+          <div class="bg-gray-100 w-fit">
+            <Carousel :images="product.images"/>
+          </div>
         </div>
         <h1 class="font-bold text-xl">{{ product.title }}</h1>
         <p class="text-xl font-medium">Precio: {{ product.price }} $</p>
-        <p class="text-xl font-medium" >{{ product.description }}</p>
+        <p class="text-xl font-medium sm:w-[600px]" >{{ product.description }}</p>
+        <hr class="w-full">
         <p class="text-xl font-medium">Color: {{checkColor}}</p>
         <div
             class="grid grid-cols-5 place-items-center w-full gap-5 p-2"
@@ -107,37 +110,41 @@ function handleColorChange(color: string) {
             <Check v-if="checkColor === color" :color="color === 'white' ? 'black' : 'white'"/>
           </div>
         </div>
-        <div class="grid grid-cols-5">
-          <div
-              v-for="(size, index) in product.sizes"
-              :key="index"
-              class="flex border-3 font-medium items-center justify-center p-3"
-              :class="selectedSize === index ? 'border-sky-500 text-sky-500 dark:text-sky-700 dark:border-sky-700' : 'border-gray-300'"
-              @click="() => selectedSize = index"
-          >
-            {{size}}
+        <div class="flex flex-col w-full sm:items-center justify-between sm:flex-row gap-4">
+          <div class="grid grid-cols-5  sm:w-1/2">
+            <div
+                v-for="(size, index) in product.sizes"
+                :key="index"
+                class="flex border-3 font-medium items-center justify-center p-3"
+                :class="selectedSize === index ? 'border-sky-500 text-sky-500 dark:text-sky-700 dark:border-sky-700' : 'border-gray-300'"
+                @click="() => selectedSize = index"
+            >
+              {{size}}
+            </div>
+          </div>
+          <div class="flex flex-row items-center cursor-pointer border-2 gap-4 border-gray-200 rounded-full justify-center w-fit">
+            <button class="flex items-center dark:hover:text-black hover:bg-gray-100 justify-center rounded-full p-4"
+                    @click="() => quantity++"
+            >
+              <Plus/>
+            </button>
+            <span class="font-bold text-lg">{{ quantity }}</span>
+            <button class="flex items-center dark:hover:text-black hover:bg-gray-100 justify-center rounded-full p-4"
+                    @click="() => {
+                   if( quantity > 1 ) quantity--
+                  }"
+            >
+              <Minus :class="quantity == 1 ? 'text-gray-300' : ''"/>
+            </button>
           </div>
         </div>
-        <div class="flex flex-row items-center cursor-pointer border-2 gap-4 border-gray-200 rounded-full justify-center w-fit">
-          <button class="flex items-center hover:bg-gray-100 justify-center rounded-full p-4"
-                  @click="() => quantity++"
+        <div class="flex items-center justify-center w-full">
+          <Button class="bg-black text-white w-full sm:w-[40%] dark:text-black dark:bg-white hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
+               @click="addProductToCart"
           >
-            <Plus/>
-          </button>
-          <span class="font-bold text-lg">{{ quantity }}</span>
-          <button class="flex items-center hover:bg-gray-100 justify-center rounded-full p-4"
-                  @click="() => {
-                 if( quantity > 1 ) quantity--
-                }"
-          >
-            <Minus :class="quantity == 1 ? 'text-gray-300' : ''"/>
-          </button>
+            Añadir al Pedido
+          </Button>
         </div>
-        <Button class="bg-black text-white dark:text-black dark:bg-white hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
-             @click="addProductToCart"
-        >
-          Añadir al Pedido
-        </Button>
       </div>
 
       <!-- Product not found -->
