@@ -112,14 +112,14 @@ onBeforeUnmount(() => {
 
       <button
           @click="previousSlide"
-          class="hidden sm:block absolute left-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full ml-4 transition-colors"
+          class="hidden sm:block text-black absolute left-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full ml-4 transition-colors"
       >
-        <ChevronLeft/>
+        <ChevronLeft />
       </button>
 
       <button
           @click="nextSlide"
-          class="hidden sm:block absolute right-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full mr-4 transition-colors"
+          class="hidden sm:block text-black absolute right-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full mr-4 transition-colors"
       >
         <ChevronRight/>
       </button>
