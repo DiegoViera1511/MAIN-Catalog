@@ -50,7 +50,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
             :key="index"
         >
           <div class="flex flex-row w-full justify-between sm:justify-start sm:gap-4 items-center">
-            <img :src="product.url" alt="product image" class="w-[150px] h-[150px] object-cover rounded-md"/>
+            <img :src="product.url" alt="product image" class="w-[150px] bg-gray-200 h-[150px] object-cover rounded-md"/>
             <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
               <span>{{ product.price }} $</span>
               <span>{{ product.title }}</span>
@@ -87,7 +87,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
       </div>
     </div>
     <div
-        class="flex flex-col fixed w-full z-10 dark:text-white sm:h-48 gap-8 p-5 bottom-0 items-center justify-center"
+        class="flex flex-col fixed w-full z-10 dark:text-white gap-8 bottom-[5%] items-center justify-center"
         v-if="cartProducts.length > 0"
     >
       <InvoiceDialog/>

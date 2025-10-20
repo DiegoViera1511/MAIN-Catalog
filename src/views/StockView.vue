@@ -45,7 +45,7 @@ const onDeleted = (id: number) => {
         :key="index"
     >
       <div class="flex flex-row w-full justify-between sm:justify-start gap-4 items-center">
-        <img :src="product.url" alt="product image" class="w-[150px] h-[150px] object-cover rounded-md"/>
+        <img :src="product.url" alt="product image" class="w-[150px] h-[150px] bg-gray-200 object-cover rounded-md"/>
         <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
           <span>{{ product.title }}</span>
         </div>
