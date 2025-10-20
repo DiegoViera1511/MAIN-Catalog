@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import {useProductStore} from "../store/productStore.ts";
 import {Minus, Plus, Trash} from "lucide-vue-next";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import type {CartProduct} from "../types.ts";
 import InvoiceDialog from "@/components/InvoiceDialog.vue";
 import StoreLayout from "@/layouts/StoreLayout.vue";
 
 const cartProducts = ref<CartProduct[]>([])
+const cartTotalCount = computed(() => getCartCount())
+const cartTotalPrice = computed(() => getCartTotal())
 
 onMounted(() => {
   const store = useProductStore();
@@ -36,13 +38,13 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
       <div class="flex flex-row gap-2 w-full items-center justify-start text-xl"
            v-if="getCartCount() > 0"
       >
-        <p class="text-gray-500">{{ getCartCount() }} products</p>
+        <p class="text-gray-500">{{ cartTotalCount }} {{cartTotalCount === 1 ? 'producto' : 'productos'}}</p>
         <p class="text-gray-500">|</p>
-        <p>{{ getCartTotal().toFixed(2) }} $</p>
+        <p>{{ cartTotalPrice.toFixed(2) }} $</p>
       </div>
       <div class="flex flex-col gap-3 w-full">
         <div class="flex w-full items-center justify-center">
-          <span v-if="getCartCount() == 0" class="font-medium text-2xl">No hay productos en tu lista de compras.</span>
+          <span v-if="cartTotalPrice == 0" class="font-medium text-2xl">No hay productos en tu lista de compras.</span>
         </div>
         <div
             class="flex flex-col items-center border-b-2 pb-3 border-b-gray-200 dark:border-b-gray-700 gap-4 w-full justify-between"
