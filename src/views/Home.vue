@@ -2,7 +2,6 @@
 
 import ProductsList from "../components/ProductsList.vue";
 import {onMounted, ref} from "vue";
-import StoreLayout from "@/layouts/StoreLayout.vue";
 
 const isMobile = ref(false);
 
@@ -12,7 +11,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <StoreLayout>
-    <ProductsList/>
-  </StoreLayout>
+  <ProductsList/>
 </template>

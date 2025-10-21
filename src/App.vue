@@ -4,11 +4,16 @@ import 'vue-sonner/style.css' // vue-sonner v2 requires this import
 import {useRoute} from "vue-router";
 import {computed} from "vue";
 import AdminLayout from "@/layouts/AdminLayout.vue";
+import StoreLayout from "@/layouts/StoreLayout.vue";
 
 const route = useRoute();
 
 const adminRoute = computed(() => {
   return route.path.startsWith("/admin");
+})
+
+const showFooter = computed(() => {
+  return !(route.path === "/contact" || route.path === "/cart");
 })
 
 </script>
@@ -19,6 +24,8 @@ const adminRoute = computed(() => {
     <AdminLayout v-if="adminRoute">
       <RouterView/>
     </AdminLayout>
-    <RouterView v-else/>
+    <StoreLayout :show-footer="showFooter" v-else>
+      <RouterView />
+    </StoreLayout>
   </div>
 </template>

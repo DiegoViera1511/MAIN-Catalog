@@ -32,15 +32,19 @@ const filteredProducts = computed(() => {
 
 onMounted( async () => {
   try {
-    let { data, error } = await supabase
-        .from('product')
-        .select('*')
-        .order('created_at',{ascending: false})
-    if (error) {
-      console.log(error)
+    if (productStore.allProducts.length === 0) {
+      let { data, error } = await supabase
+          .from('product')
+          .select('*')
+          .order('created_at',{ascending: false})
+      if (error) {
+        console.log(error)
+      }
+      products.value = data as ProductType[]
+      productStore.setProducts(products.value)
+    } else {
+      products.value = productStore.allProducts
     }
-    products.value = data as ProductType[]
-    productStore.setProducts(products.value)
   } catch (err) {
     error.value = "error"
   } finally {
