@@ -69,8 +69,14 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    scrollBehavior() {
-        return { top: 0 }
+    scrollBehavior(_to, _from, savedPosition) {
+        if (savedPosition) {
+            // Browser's back/forward button: use saved position
+            return savedPosition
+        } else {
+            // Regular navigation: scroll to top
+            return { top: 0 }
+        }
     }
 });
 
