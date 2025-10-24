@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {MessageCircle, Send, Instagram} from "lucide-vue-next";
+import {MessageCircle, Send, Instagram, Link} from "lucide-vue-next";
 import {useProductStore} from "@/store/productStore.ts";
 import {computed} from "vue";
 
@@ -39,9 +39,18 @@ function getInvoiceText() {
           rel="noopener noreferrer"
       >
         <div
-            class="flex flex-row gap-2 shadow items-center justify-start text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full">
-          <MessageCircle class="text-green-500"/>
-          <p class="font-medium text-xl">+53 55394122</p>
+            class="flex flex-row gap-4 shadow items-center justify-between text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full"
+        >
+          <div class="flex flex-row gap-4 items-center justify-start">
+            <MessageCircle class="text-green-500"/>
+            <div class="flex flex-col">
+              <p class="font-medium text-xl">Link a WhatsApp</p>
+              <p class="font-medium text-sm text-gray-500">+53 55394122</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-end">
+            <Link/>
+          </div>
         </div>
       </a>
       <a
@@ -50,11 +59,22 @@ function getInvoiceText() {
           rel="noopener noreferrer"
       >
         <div
-            class="flex flex-row gap-2 shadow items-center justify-start text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full">
-          <Send class="text-cyan-500"/>
-          <p class="font-medium text-xl">@Rafas_mood</p>
+            class="flex flex-row gap-4 shadow items-center justify-between  text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full"
+        >
+          <div class="flex flex-row gap-4 items-center justify-start">
+            <Send class="text-cyan-500"/>
+            <div class="flex flex-col">
+              <p class="font-medium text-xl">Link a Telegram</p>
+              <p class="font-medium text-sm text-gray-500">@Rafas_mood</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-end">
+            <Link/>
+          </div>
         </div>
       </a>
+    </div>
+    <div class="flex flex-col gap-3 w-full">
       <h1 class="font-bold text-2xl">Redes Sociales</h1>
       <a
           href="https://www.instagram.com/main_activewear?igsh=OWc0MG41YmNxYWdl&utm_source=qr"
@@ -62,9 +82,15 @@ function getInvoiceText() {
           rel="noopener noreferrer"
       >
         <div
-            class="flex flex-row gap-2 shadow items-center justify-start text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full">
-          <Instagram class="text-orange-500"/>
-          <p class="font-medium text-xl">main_activewear</p>
+            class="flex flex-row gap-2 shadow items-center justify-between text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full"
+        >
+          <div class="flex flex-row gap-4 items-center justify-start">
+            <Instagram class="text-orange-500"/>
+            <p class="font-medium text-xl">main_activewear</p>
+          </div>
+          <div class="flex items-center justify-end">
+            <Link/>
+          </div>
         </div>
       </a>
     </div>
