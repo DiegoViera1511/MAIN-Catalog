@@ -10,6 +10,7 @@ import Carousel from "@/components/Carousel.vue";
 import {supabase} from "@/lib/supabase.ts";
 
 const product = ref<ProductType | undefined>(undefined)
+const productStore = useProductStore()
 const selectedSize = ref<number>(0)
 const selectedColor = ref<string>("")
 const checkColor = computed(() => selectedColor.value)
@@ -19,21 +20,24 @@ const route = useRoute()
 
 async function fetchProduct(id: number) {
   try {
-    loading.value = true;
-    const {data, error} = await supabase
-        .from('product')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-    if (error) {
-      console.error('Error fetching product:', error);
-      toast.error('Error al cargar el producto');
-      return;
+    const response = productStore.getProductById(id);
+    if (!response) {
+      loading.value = true;
+      const {data, error} = await supabase
+          .from('product')
+          .select('*')
+          .eq('id', id)
+          .single();
+      if (error) {
+        console.error('Error fetching product:', error);
+        toast.error('Error al cargar el producto');
+        return;
+      }
+      product.value = data as ProductType
+    } else {
+      product.value = response ;
     }
-
-    product.value = data;
-    selectedColor.value = data?.colors[0] || "";
+    selectedColor.value = product.value?.colors[0] || "";
   } catch (error) {
     console.error('Error:', error);
     toast.error('Error al cargar el producto');
@@ -87,7 +91,7 @@ function handleColorChange(color: string) {
         <div
             class="flex bg-gray-100 w-full sm:w-[400px]"
         >
-          <img class="object-cover" :src="product.url" alt="product image"/>
+          <img loading="lazy" class="object-cover" :src="product.url" alt="product image"/>
         </div>
       </div>
       <div v-else class="flex items-center justify-center w-full">

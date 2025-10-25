@@ -35,7 +35,7 @@ const image: string = (images[props.imageSrc] as string) || props.imageSrc;
 <template>
   <div class="flex flex-col w-full hover:shadow-sm items-center justify-center gap-2 p-3 rounded-md">
     <div class="flex bg-gray-100 w-full justify-center h-[400px]">
-      <img class="object-cover" :src="image" alt="">
+      <img loading="lazy" class="object-cover" :src="image" alt="">
     </div>
     <div class="flex flex-col w-full justify-start items-start dark:text-white">
       <p>{{props.title}}</p>
