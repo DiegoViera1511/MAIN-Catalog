@@ -71,7 +71,7 @@ async function handleDelete() {
 <template>
   <AlertDialog>
     <AlertDialogTrigger as-child>
-      <Button variant="outline" class="w-[20%]">
+      <Button class="w-20 bg-white border-2 text-red-500">
         <Trash />
       </Button>
     </AlertDialogTrigger>

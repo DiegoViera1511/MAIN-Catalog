@@ -3,10 +3,11 @@ import ProductInfo from "../views/ProductInfo.vue";
 import Home from "../views/Home.vue";
 import CartList from "../views/CartList.vue";
 import ContactView from "@/views/ContactView.vue";
-import AdminLogIn from "@/views/AdminLogIn.vue";
-import AdminDashboard from "@/views/AdminDashboard.vue";
-import NewProduct from "@/views/NewProduct.vue";
-import StockView from "@/views/StockView.vue";
+import AdminLogIn from "@/views/admin/AdminLogIn.vue";
+import AdminDashboard from "@/views/admin/AdminDashboard.vue";
+import NewProduct from "@/views/admin/NewProduct.vue";
+import StockView from "@/views/admin/StockView.vue";
+import EditProduct from '@/views/admin/EditProduct.vue';
 
 const routes = [
     {
@@ -58,6 +59,11 @@ const routes = [
         path: '/admin/new-product',
         component: NewProduct,
         name: 'NewProduct',
+    },
+    {
+        path: '/admin/stock/edit/:id',
+        component: EditProduct,
+        name: 'EditProduct',
     },
     {
         path: '/admin/stock',

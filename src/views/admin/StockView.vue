@@ -3,7 +3,9 @@ import {onMounted, ref} from "vue";
 import type {ProductType} from "@/types.ts";
 import {supabase} from "@/lib/supabase.ts";
 import AlertDialogDeleteProduct from "@/components/AlertDialogDeleteProduct.vue";
-import {LoaderCircle} from "lucide-vue-next";
+import {LoaderCircle, SquarePen} from "lucide-vue-next";
+import {Button} from "@/components/ui/button";
+import router from "@/router";
 
 const products = ref<ProductType[]>([])
 const loading = ref<boolean>(true)
@@ -30,6 +32,10 @@ const onDeleted = (id: number) => {
   products.value = products.value.filter(p => p.id !== id);
 }
 
+const onEdit = (id: number) => {
+  router.push(`/admin/stock/edit/${id}`)
+}
+
 </script>
 
 <template>
@@ -50,7 +56,15 @@ const onDeleted = (id: number) => {
           <span>{{ product.title }}</span>
         </div>
       </div>
-      <AlertDialogDeleteProduct :productId="product.id" :productUrl="product.url" @deleted="() => onDeleted(product.id)"/>
+      <div class="flex flex-row w-full gap-2 items-center justify-around">
+        <Button
+            class="w-20 bg-white border-2 text-cyan-500"
+            @click="() => onEdit(product.id)"
+        >
+          <SquarePen />
+        </Button>
+        <AlertDialogDeleteProduct :productId="product.id" :productUrl="product.url" @deleted="() => onDeleted(product.id)"/>
+      </div>
     </div>
   </div>
 </template>
