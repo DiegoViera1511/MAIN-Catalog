@@ -16,6 +16,7 @@ export interface ProductType {
     sizes: string[],
     stock: number,
     colors: string[]
+    available: boolean,
 }
 
 export interface CartProduct {

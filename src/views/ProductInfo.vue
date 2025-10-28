@@ -147,10 +147,11 @@ function handleColorChange(color: string) {
       </div>
       <div class="flex items-center justify-center w-full">
         <Button
-            class="bg-black text-white w-full sm:w-[40%] dark:text-black dark:bg-white hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
+            class="bg-black w-full sm:w-[40%] dark:bg-white text-white dark:text-black hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
             @click="addProductToCart"
+            :disabled="!product.available"
         >
-          Añadir al Pedido
+          <p>{{product.available ? 'Añadir al Pedido' : 'Agotado'}}</p>
         </Button>
       </div>
     </div>

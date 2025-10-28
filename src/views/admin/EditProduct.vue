@@ -7,6 +7,7 @@ import {BgColors, Colors, type ProductType} from '@/types.ts'
 import {Check, LoaderCircle, X} from 'lucide-vue-next'
 import {useProductStore} from "@/store/productStore.ts";
 import {useRoute} from "vue-router";
+import {Switch} from "@/components/ui/switch";
 
 const title = ref('')
 const description = ref('')
@@ -25,6 +26,7 @@ const loading = ref(false)
 const loadingProductInfo = ref(false)
 const message = ref('')
 const fileInput = ref<HTMLInputElement | null>(null)
+const productAvailable = ref<boolean>(false)
 
 onMounted(async () => {
   try {
@@ -50,6 +52,7 @@ onMounted(async () => {
       selectedSizes.value = product.sizes
       selectedColors.value = product.colors
       selectedImages.value = product.images || []
+      productAvailable.value = product.available
     } else {
       title.value = response.title
       description.value = response.description
@@ -58,6 +61,7 @@ onMounted(async () => {
       selectedSizes.value = response.sizes
       selectedColors.value = response.colors
       selectedImages.value = response.images || []
+      productAvailable.value = response.available
     }
   } catch (error) {
     console.error('Error:', error);
@@ -187,6 +191,7 @@ const handleSubmit = async () => {
         sizes: selectedSizes.value,
         stock: 0,
         colors: selectedColors.value,
+        available: productAvailable.value
       },
     ]).eq('id', productId)
 
@@ -244,6 +249,10 @@ const handleSubmit = async () => {
   }
 }
 
+const toggleAvailable = () => {
+  productAvailable.value = !productAvailable.value
+}
+
 const labelClass = 'block mb-1 font-medium dark:text-white'
 const inputClass = 'w-full bg-gray-200 dark:text-white dark:bg-neutral-700 rounded px-2 py-1'
 </script>
@@ -257,6 +266,11 @@ const inputClass = 'w-full bg-gray-200 dark:text-white dark:bg-neutral-700 round
   <div v-else class="max-w-md mx-auto sm:w-[50%]">
     <h2 class="text-xl font-bold mb-4 dark:text-white">Editar producto</h2>
     <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
+      <div class="flex flex-row gap-2 text-black dark:text-white px-2 py-1 items-center justify-between w-full bg-neutral-700 rounded-sm">
+        <Switch :model-value="productAvailable" @update:model-value="toggleAvailable"/>
+        <p>{{productAvailable ? 'Disponible' : 'Agotado' }}</p>
+      </div>
+      <hr class="w-full"/>
       <div>
         <label :class="labelClass">Título</label>
         <input v-model="title" :class="inputClass" required/>

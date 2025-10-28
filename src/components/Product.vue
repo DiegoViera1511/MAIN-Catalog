@@ -25,6 +25,11 @@ const props = defineProps({
     type: Array,
     required: true,
     default: () => []
+  },
+  available:{
+    type: Boolean,
+    required: true,
+    default: true
   }
 });
 
@@ -38,7 +43,12 @@ const image: string = (images[props.imageSrc] as string) || props.imageSrc;
       <img loading="lazy" class="object-cover" :src="image" alt="">
     </div>
     <div class="flex flex-col w-full justify-start items-start dark:text-white">
-      <p>{{props.title}}</p>
+      <div class="flex flex-row items-center w-full justify-between">
+        <p>{{props.title}}</p>
+        <div v-show="!props.available" class= "flex items-center justify-center border-2 border-red-800 rounded-full px-3 text-red-800 font-medium">
+          Agotado
+        </div>
+      </div>
       <p class="font-bold">{{props.price}}$</p>
     </div>
   </div>
