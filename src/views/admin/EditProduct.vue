@@ -266,7 +266,7 @@ const inputClass = 'w-full bg-gray-200 dark:text-white dark:bg-neutral-700 round
   <div v-else class="max-w-md mx-auto sm:w-[50%]">
     <h2 class="text-xl font-bold mb-4 dark:text-white">Editar producto</h2>
     <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
-      <div class="flex flex-row gap-2 text-black dark:text-white px-2 py-1 items-center justify-between w-full bg-neutral-700 rounded-sm">
+      <div class="flex flex-row gap-2 font-medium text-black dark:text-white px-5 py-1 items-center justify-between w-full border-2 dark:bg-neutral-700 rounded-sm">
         <Switch :model-value="productAvailable" @update:model-value="toggleAvailable"/>
         <p>{{productAvailable ? 'Disponible' : 'Agotado' }}</p>
       </div>
