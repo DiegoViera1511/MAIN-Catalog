@@ -74,12 +74,6 @@ function handleColorChange(color: string) {
   selectedColor.value = color;
 }
 
-const isLoadingImage = ref(true);
-
-function setLoad() {
-  isLoadingImage.value = false;
-}
-
 </script>
 
 <template>
