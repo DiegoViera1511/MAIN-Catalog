@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import {ChevronLeft,ChevronRight} from "lucide-vue-next";
+import LoadContainer from "@/components/LoadContainer.vue";
+import ProductImage from "@/components/ProductImage.vue";
 
 const props = defineProps({
   images: {
@@ -92,6 +94,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   pauseAutoPlay();
 });
+
 </script>
 
 <template>
@@ -104,9 +107,9 @@ onBeforeUnmount(() => {
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
     >
-      <div class="flex transition-transform duration-500 ease-in-out" :style="carouselStyle">
+      <div class="flex bg-gray-100 w-fit transition-transform duration-500 ease-in-out" :style="carouselStyle">
         <div v-for="(image, index) in images" :key="index" class="w-full flex-shrink-0">
-          <img :src="image" :alt="`Slide ${index + 1}`" class="w-full pointer-events-none" />
+          <ProductImage :image-src="image" :key="index" />
         </div>
       </div>
 

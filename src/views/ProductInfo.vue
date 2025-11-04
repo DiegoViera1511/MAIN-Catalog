@@ -8,6 +8,8 @@ import {Button} from "@/components/ui/button";
 import {toast} from "vue-sonner";
 import Carousel from "@/components/Carousel.vue";
 import {supabase} from "@/lib/supabase.ts";
+import LoadContainer from "@/components/LoadContainer.vue";
+import ProductImage from "@/components/ProductImage.vue";
 
 const product = ref<ProductType | undefined>(undefined)
 const productStore = useProductStore()
@@ -35,7 +37,7 @@ async function fetchProduct(id: number) {
       }
       product.value = data as ProductType
     } else {
-      product.value = response ;
+      product.value = response;
     }
     selectedColor.value = product.value?.colors[0] || "";
   } catch (error) {
@@ -73,6 +75,12 @@ function handleColorChange(color: string) {
   selectedColor.value = color;
 }
 
+const isLoadingImage = ref(true);
+
+function setLoad() {
+  isLoadingImage.value = false;
+}
+
 </script>
 
 <template>
@@ -83,21 +91,17 @@ function handleColorChange(color: string) {
       </div>
     </div>
     <!-- Product content -->
-    <div v-else-if="product" class="flex flex-col gap-4">
+    <div v-else-if="product" class="flex flex-col gap-4 w-full sm:w-fit">
       <div
           v-if="product.images.length === 1"
           class="flex items-center justify-center w-full"
       >
-        <div
-            class="flex bg-gray-100 w-full sm:w-[400px]"
-        >
-          <img loading="lazy" class="object-cover" :src="product.url" alt="product image"/>
+        <div class="flex items-center justify-center w-full sm:w-[400px]">
+          <ProductImage :image-src="product.url" />
         </div>
       </div>
       <div v-else class="flex items-center justify-center w-full">
-        <div class="bg-gray-100 w-fit">
-          <Carousel :images="product.images"/>
-        </div>
+        <Carousel :images="product.images"/>
       </div>
       <h1 class="font-bold text-xl">{{ product.title }}</h1>
       <p class="text-xl font-medium">Precio: {{ product.price }} $</p>
@@ -151,7 +155,7 @@ function handleColorChange(color: string) {
             @click="addProductToCart"
             :disabled="!product.available"
         >
-          <p>{{product.available ? 'Añadir al Pedido' : 'Agotado'}}</p>
+          <p>{{ product.available ? 'Añadir al Pedido' : 'Agotado' }}</p>
         </Button>
       </div>
     </div>

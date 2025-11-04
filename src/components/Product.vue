@@ -1,5 +1,9 @@
 <script setup lang="ts">
 
+import LoadContainer from "@/components/LoadContainer.vue";
+import {ref} from "vue";
+import ProductImage from "@/components/ProductImage.vue";
+
 const props = defineProps({
   imageSrc:{
     type: String, 
@@ -33,15 +37,15 @@ const props = defineProps({
   }
 });
 
+
 const images = import.meta.glob('../assets/images/*', { eager: true });
 const image: string = (images[props.imageSrc] as string) || props.imageSrc;
+
 </script>
 
 <template>
   <div class="flex flex-col w-full hover:shadow-sm items-center justify-center gap-2 p-3 rounded-md">
-    <div class="flex bg-gray-100 w-full justify-center h-[400px]">
-      <img loading="lazy" class="object-cover" :src="image" alt="">
-    </div>
+    <ProductImage :imageSrc="image" />
     <div class="flex flex-col w-full justify-start items-start dark:text-white">
       <div class="flex flex-row items-center w-full justify-between">
         <p>{{props.title}}</p>
