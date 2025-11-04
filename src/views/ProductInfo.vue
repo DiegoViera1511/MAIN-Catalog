@@ -8,7 +8,6 @@ import {Button} from "@/components/ui/button";
 import {toast} from "vue-sonner";
 import Carousel from "@/components/Carousel.vue";
 import {supabase} from "@/lib/supabase.ts";
-import LoadContainer from "@/components/LoadContainer.vue";
 import ProductImage from "@/components/ProductImage.vue";
 
 const product = ref<ProductType | undefined>(undefined)

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-
-import LoadContainer from "@/components/LoadContainer.vue";
-import {ref} from "vue";
 import ProductImage from "@/components/ProductImage.vue";
 
 const props = defineProps({

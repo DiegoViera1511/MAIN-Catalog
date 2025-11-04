@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import {ChevronLeft,ChevronRight} from "lucide-vue-next";
-import LoadContainer from "@/components/LoadContainer.vue";
 import ProductImage from "@/components/ProductImage.vue";
 
 const props = defineProps({
