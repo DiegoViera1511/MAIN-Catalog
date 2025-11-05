@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import {ChevronLeft,ChevronRight} from "lucide-vue-next";
+import {ref, computed, onMounted, onBeforeUnmount} from 'vue';
+import {ChevronLeft, ChevronRight} from "lucide-vue-next";
 import ProductImage from "@/components/ProductImage.vue";
 
 const props = defineProps({
@@ -97,44 +97,42 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex">
-    <div
-      class="relative w-full sm:w-[400px] overflow-hidden select-none"
+  <div
+      class="relative flex w-full sm:w-[400px] overflow-hidden select-none"
       @mouseenter="pauseAutoPlay"
       @mouseleave="startAutoPlay"
       @touchstart="handleTouchStart"
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
+  >
+    <div class="flex bg-gray-100 w-full transition-transform duration-500 ease-in-out" :style="carouselStyle">
+      <div v-for="(image, index) in images" :key="index" class="w-full flex-shrink-0">
+        <ProductImage :image-src="image" :key="index"/>
+      </div>
+    </div>
+
+    <button
+        @click="previousSlide"
+        class="hidden sm:block text-black absolute left-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full ml-4 transition-colors"
     >
-      <div class="flex bg-gray-100 w-fit transition-transform duration-500 ease-in-out" :style="carouselStyle">
-        <div v-for="(image, index) in images" :key="index" class="w-full flex-shrink-0">
-          <ProductImage :image-src="image" :key="index" />
-        </div>
-      </div>
+      <ChevronLeft/>
+    </button>
 
+    <button
+        @click="nextSlide"
+        class="hidden sm:block text-black absolute right-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full mr-4 transition-colors"
+    >
+      <ChevronRight/>
+    </button>
+
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
       <button
-          @click="previousSlide"
-          class="hidden sm:block text-black absolute left-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full ml-4 transition-colors"
-      >
-        <ChevronLeft />
-      </button>
-
-      <button
-          @click="nextSlide"
-          class="hidden sm:block text-black absolute right-0 bottom-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full mr-4 transition-colors"
-      >
-        <ChevronRight/>
-      </button>
-
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-        <button
-            v-for="(_, index) in images"
-            :key="index"
-            @click="goToSlide(index)"
-            class="w-3 h-3 rounded-full transition-colors"
-            :class="currentSlide === index ? 'bg-white' : 'bg-gray-200'"
-        ></button>
-      </div>
+          v-for="(_, index) in images"
+          :key="index"
+          @click="goToSlide(index)"
+          class="w-3 h-3 rounded-full transition-colors"
+          :class="currentSlide === index ? 'bg-white' : 'bg-gray-200'"
+      ></button>
     </div>
   </div>
 </template>
