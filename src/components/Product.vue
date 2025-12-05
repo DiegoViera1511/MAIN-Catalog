@@ -50,7 +50,7 @@ const image: string = (images[props.imageSrc] as string) || props.imageSrc;
           Agotado
         </div>
       </div>
-      <p class="font-bold">{{props.price}}$</p>
+      <p class="font-bold">${{props.price}}</p>
     </div>
   </div>
 </template>

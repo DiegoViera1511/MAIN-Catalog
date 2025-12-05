@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from "vue";
-import {BgColors, type CartProduct, Colors, type ProductType} from "../types.ts";
+import {BgColors, SpanishColors, type CartProduct, Colors, type ProductType} from "../types.ts";
 import {useProductStore} from "../store/productStore.ts";
 import {useRoute} from "vue-router";
-import {Plus, Minus, Check, LoaderCircle} from "lucide-vue-next"
+import {Check, LoaderCircle, Share} from "lucide-vue-next"
 import {Button} from "@/components/ui/button";
 import {toast} from "vue-sonner";
 import Carousel from "@/components/Carousel.vue";
@@ -17,6 +17,7 @@ const selectedColor = ref<string>("")
 const checkColor = computed(() => selectedColor.value)
 const quantity = ref<number>(1)
 const loading = ref<boolean>(true)
+const copied = ref<boolean>(false)
 const route = useRoute()
 
 async function fetchProduct(id: number) {
@@ -45,6 +46,27 @@ async function fetchProduct(id: number) {
   } finally {
     loading.value = false;
   }
+}
+
+//TODO REFACTOR COPY INVOICE FUNCTION TO A COMPOSABLE
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function onCopy() {
+  copied.value = true;
+  sleep(3000).then(() => {
+    copied.value = false;
+  });
+}
+
+function copyPathToClipboard() {
+  const url = window.location.href
+  navigator.clipboard.writeText(url)
+  toast.success(`Link copiado al portapapeles`, {
+    duration: 2000,
+  });
+  onCopy()
 }
 
 onMounted(async () => {
@@ -77,7 +99,7 @@ function handleColorChange(color: string) {
 </script>
 
 <template>
-  <div class="flex justify-center dark:text-white p-4 items-start w-full">
+  <div class="flex justify-center dark:text-white items-start w-full">
     <div v-if="loading" class="flex justify-center w-full items-center h-52">
       <div class="flex dark:text-white items-center justify-center  w-full">
         <LoaderCircle class="animate-spin" :size="50"/>
@@ -96,60 +118,58 @@ function handleColorChange(color: string) {
       <div v-else class="flex items-center justify-center w-full">
         <Carousel :images="product.images"/>
       </div>
-      <h1 class="font-bold text-xl">{{ product.title }}</h1>
-      <p class="text-xl font-medium">Precio: {{ product.price }} $</p>
-      <p class="text-xl font-medium sm:w-[600px]">{{ product.description }}</p>
-      <hr class="w-full">
-      <p class="text-xl font-medium">Color: {{ checkColor }}</p>
-      <div
-          class="grid grid-cols-5 place-items-center w-full gap-5 p-2"
-      >
-        <div
-            v-for="(color , index) in product.colors"
-            :key="index"
-            :class="`flex items-center justify-center w-10 h-10 border-2  rounded-full ${BgColors[color as Colors]} cursor-pointer`"
-            @click="handleColorChange(color)"
-        >
-          <Check v-if="checkColor === color" :color="color === 'white' ? 'black' : 'white'"/>
+      <div class="flex flex-col gap-4 w-full px-4 sm:w-fit">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-row justify-between items-center gap-2">
+            <h1 class="font-bold text-xl flex-1  max-w-[80%] overflow-ellipsis  break-words">
+              {{ product.title }}
+            </h1>
+            <button
+                class="flex items-center justify-center flex-shrink-0 bg-gray-200 p-2 rounded-full"
+                @click="copyPathToClipboard"
+            >
+              <Share :size="20" />
+            </button>
+          </div>
+          <p class="text-md text-gray-500 font-medium sm:w-[600px]">{{ product.description }}</p>
+          <p class="text-md font-bold">${{ product.price }}</p>
         </div>
-      </div>
-      <div class="flex flex-col w-full sm:items-center sm:justify-between sm:flex-row gap-4">
+        <hr class="w-full">
+        <div
+            class="grid grid-cols-5 sm:w-1/2"
+        >
+          <div
+              v-for="(color , index) in product.colors"
+              :key="index"
+              :class="`flex items-center justify-center p-3 border-3 cursor-pointer ${checkColor === color ? 'border-5 border-gray-400' : ''}  ${BgColors[color as Colors]}`"
+              @click="handleColorChange(color)"
+          >
+            <Check v-if="checkColor === color" :color="color === 'white' ? 'black' : 'white'"/>
+          </div>
+        </div>
+        <p class="text-xl text-gray-500 font-medium">{{ SpanishColors[checkColor as Colors]}}</p>
+        <hr class="w-full">
+        <p class="text-xl text-gray-500 font-medium">Seleccione una talla</p>
         <div v-if="product.sizes.length > 0" class="grid grid-cols-5 sm:w-1/2">
           <div
               v-for="(size, index) in product.sizes"
               :key="index"
-              class="flex border-3 font-medium items-center justify-center p-3"
-              :class="selectedSize === index ? 'border-sky-500 text-sky-500 dark:text-sky-700 dark:border-sky-700' : 'border-gray-300'"
+              class="flex border-3 font-medium items-center justify-center p-3 cursor-pointer"
+              :class="selectedSize === index ? 'border-black text-black dark:text-white border-5 dark:border-white' : 'border-gray-400 text-gray-400'"
               @click="() => selectedSize = index"
           >
             {{ size }}
           </div>
         </div>
-        <div
-            class="flex flex-row items-center cursor-pointer border-2 gap-4 border-gray-200 rounded-full justify-center w-fit">
-          <button class="flex items-center dark:hover:text-black hover:bg-gray-100 justify-center rounded-full p-4"
-                  @click="() => quantity++"
+        <div class="flex sticky bottom-3 top-auto items-center justify-center w-full">
+          <Button
+              class="bg-black w-full sm:w-[40%] dark:bg-white text-white dark:text-black hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
+              @click="addProductToCart"
+              :disabled="!product.available"
           >
-            <Plus/>
-          </button>
-          <span class="font-bold text-lg">{{ quantity }}</span>
-          <button class="flex items-center dark:hover:text-black hover:bg-gray-100 justify-center rounded-full p-4"
-                  @click="() => {
-                   if( quantity > 1 ) quantity--
-                  }"
-          >
-            <Minus :class="quantity == 1 ? 'text-gray-300' : ''"/>
-          </button>
+            <p>{{ product.available ? 'Añadir al Pedido' : 'Agotado' }}</p>
+          </Button>
         </div>
-      </div>
-      <div class="flex items-center justify-center w-full">
-        <Button
-            class="bg-black w-full sm:w-[40%] dark:bg-white text-white dark:text-black hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
-            @click="addProductToCart"
-            :disabled="!product.available"
-        >
-          <p>{{ product.available ? 'Añadir al Pedido' : 'Agotado' }}</p>
-        </Button>
       </div>
     </div>
 

@@ -49,8 +49,14 @@ const handleTouchStart = (e: TouchEvent) => {
 };
 
 const handleTouchMove = (e: TouchEvent) => {
-  // Prevenir el scroll por defecto durante el swipe
-  e.preventDefault();
+  const touchMoveX = e.touches[0].clientX;
+  const deltaX = Math.abs(touchStartX.value - touchMoveX);
+  const deltaY = Math.abs(touchStartX.value - e.touches[0].clientY);
+
+  // Solo prevenir si el gesto es más horizontal que vertical
+  if (deltaX > deltaY) {
+    e.preventDefault();
+  }
 };
 
 const handleTouchEnd = (e: TouchEvent) => {

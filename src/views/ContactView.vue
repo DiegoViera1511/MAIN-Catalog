@@ -2,6 +2,7 @@
 import {MessageCircle, Send, Instagram, Link} from "lucide-vue-next";
 import {useProductStore} from "@/store/productStore.ts";
 import {computed} from "vue";
+import {Colors, SpanishColors} from "@/types.ts";
 
 const cartProducts = computed(() => {
   const store = useProductStore();
@@ -17,7 +18,7 @@ function getInvoiceText() {
   const products = store.cart;
   const lines = products.map(product => {
     const lineTotal = (product.price * product.quantity).toFixed(2);
-    return `${product.title}%20${product.selectedSize ? '%0ATalla:%20' + product.selectedSize : ''}%20%0AColor:%20${product.selectedColor}%20%20%0ACantidad:%20${product.quantity}%20%0APrecio:%20${lineTotal}%20$%20%0A------------------------------`;
+    return `${product.title}%20${product.selectedSize ? '%0ATalla:%20' + product.selectedSize : ''}%20%0AColor:%20${SpanishColors[product.selectedColor as Colors]}%20%20%0ACantidad:%20${product.quantity}%20%0APrecio:%20$${lineTotal}%20%20%0A------------------------------`;
   });
   if (products.length > 0) {
     lines.push(`Total: ${getCartTotal()}%20$`);
@@ -54,6 +55,26 @@ function getInvoiceText() {
         </div>
       </a>
       <a
+          :href="`https://wa.me/5355206726?text=${getInvoiceText()}`"
+          target="_blank"
+          rel="noopener noreferrer"
+      >
+        <div
+            class="flex flex-row gap-4 shadow items-center justify-between text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full"
+        >
+          <div class="flex flex-row gap-4 items-center justify-start">
+            <MessageCircle class="text-green-500"/>
+            <div class="flex flex-col">
+              <p class="font-medium text-xl">Link a WhatsApp</p>
+              <p class="font-medium text-sm text-gray-500">+53 55206726</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-end">
+            <Link/>
+          </div>
+        </div>
+      </a>
+      <a
           :href="`https://t.me/Rafas_mood?text=${getInvoiceText()}`"
           target="_blank"
           rel="noopener noreferrer"
@@ -82,11 +103,14 @@ function getInvoiceText() {
           rel="noopener noreferrer"
       >
         <div
-            class="flex flex-row gap-2 shadow items-center justify-between text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full"
+            class="flex flex-row gap-4 shadow items-center justify-between  text-lg border-2 dark:border-gray-600 p-4 rounded-lg hover:shadow-md w-full"
         >
           <div class="flex flex-row gap-4 items-center justify-start">
             <Instagram class="text-orange-500"/>
-            <p class="font-medium text-xl">main_activewear</p>
+            <div class="flex flex-col">
+              <p class="font-medium text-xl">Link a Instagram</p>
+              <p class="font-medium text-sm text-gray-500">main_activewear</p>
+            </div>
           </div>
           <div class="flex items-center justify-end">
             <Link/>

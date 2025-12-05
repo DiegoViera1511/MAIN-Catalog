@@ -13,6 +13,8 @@ import {useProductStore} from "@/store/productStore.ts";
 import {computed, ref} from "vue";
 import {Check,Copy} from "lucide-vue-next";
 import {useRouter} from "vue-router";
+import {Button} from "@/components/ui/button";
+import {Colors, SpanishColors} from "@/types.ts";
 
 const copied = ref(false)
 const router = useRouter();
@@ -31,7 +33,7 @@ function getInvoiceText() {
   const products = store.cart;
   const lines = products.map(product => {
     const lineTotal = (product.price * product.quantity).toFixed(2);
-    return `${product.title} ${ product.selectedSize ? '\nTalla: ' + product.selectedSize : '' }\nColor: ${product.selectedColor} \nCantidad: ${product.quantity} \nPrecio: ${lineTotal} $\n------------------------------`;
+    return `${product.title} ${ product.selectedSize ? '\nTalla: ' + product.selectedSize : '' }\nColor: ${SpanishColors[product.selectedColor as Colors]} \nCantidad: ${product.quantity} \nPrecio: $${lineTotal} \n------------------------------`;
   });
   lines.push(`Total: ${getCartTotal()} $`);
   return lines.join('\n');
@@ -62,9 +64,12 @@ function goToContacts(){
 
 <template>
   <Dialog>
-    <DialogTrigger
-        class="flex bg-neutral-900 items-center justify-center dark:bg-slate-50 text-white dark:text-black p-4 rounded-full w-[80%] sm:w-[40%] md:w-[30%]">
-      Contactar administrador
+    <DialogTrigger>
+      <Button
+          class="flex items-center justify-center bg-black w-full dark:bg-white text-white dark:text-black hover:bg-gray-200 font-medium p-5 rounded-full"
+      >
+        Contactar Administrador
+      </Button>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
@@ -91,9 +96,9 @@ function goToContacts(){
         >
           <p>Nombre: {{ product.title }}.</p>
           <p v-if="product.selectedSize">Talla: {{ product.selectedSize }}</p>
-          <p>Color: {{ product.selectedColor }}</p>
+          <p>Color: {{ SpanishColors[product.selectedColor as Colors] }}</p>
           <p>Cantidad: {{ product.quantity }}</p>
-          <p>Costo: {{ product.price }} $</p>
+          <p>Precio: ${{ product.price }}</p>
           <p>----------------------</p>
         </div>
         <p>Total: {{ getCartTotal() }} $</p>

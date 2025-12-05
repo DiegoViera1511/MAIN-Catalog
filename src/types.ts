@@ -57,6 +57,34 @@ export enum Colors {
     WHITE = "white",
 }
 
+export const SpanishColors = {
+    [Colors.RED] : "Rojo",
+    [Colors.DARK_RED]: "Rojo Oscuro",
+    [Colors.BEIGE] : "Beige",
+    [Colors.AMBER] : "Amber",
+    [Colors.YELLOW] : "Amarillo",
+    [Colors.BROWN] : "Marrón",
+    [Colors.LIME] : "Lima",
+    [Colors.GREEN] : "Verde",
+    [Colors.LIGHT_GREEN] : "Verde Claro",
+    [Colors.DARK_LIME] : "Lima Oscuro",
+    [Colors.TEAL] : "Teal",
+    [Colors.LIGHT_SKY] : "Cielo Claro",
+    [Colors.SKY] : "Cielo",
+    [Colors.DARK_SKY] : "Cielo Oscuro",
+    [Colors.BLUE] : "Azul",
+    [Colors.VIOLET] : "Violeta",
+    [Colors.LIGHT_VIOLET] : "Violeta Claro",
+    [Colors.FUCHSIA] : "Fuchsia",
+    [Colors.PINK] : "Rosado",
+    [Colors.LIGHT_PINK] : "Rosado Claro",
+    [Colors.GRAY] : "Gris",
+    [Colors.LIGHT_GRAY] : "Gris Claro",
+    [Colors.STONE] : "Gris Oscuro",
+    [Colors.BLACK] : "Negro",
+    [Colors.WHITE] : "Blanco",
+}
+
 export const BgColors = {
     [Colors.RED] : "bg-red-500",
     [Colors.DARK_RED]: "bg-rose-800",

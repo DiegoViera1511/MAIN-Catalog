@@ -2,8 +2,9 @@
 import {useProductStore} from "../store/productStore.ts";
 import {Minus, Plus, Trash} from "lucide-vue-next";
 import {computed, onMounted, ref} from "vue";
-import type {CartProduct} from "../types.ts";
+import {type CartProduct, SpanishColors} from "../types.ts";
 import InvoiceDialog from "@/components/InvoiceDialog.vue";
+import {Colors} from "../types.ts";
 
 const cartProducts = ref<CartProduct[]>([])
 const cartTotalCount = computed(() => getCartCount())
@@ -38,7 +39,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
     >
       <p class="text-gray-500">{{ cartTotalCount }} {{ cartTotalCount === 1 ? 'producto' : 'productos' }}</p>
       <p class="text-gray-500">|</p>
-      <p>{{ cartTotalPrice.toFixed(2) }} $</p>
+      <p>${{ cartTotalPrice.toFixed(2) }}</p>
     </div>
     <div class="flex flex-col gap-3 w-full">
       <div class="flex w-full items-center justify-center">
@@ -52,10 +53,10 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
         <div class="flex flex-row w-full justify-between sm:justify-start sm:gap-4 items-center">
           <img :src="product.url" alt="product image" class="w-[150px] bg-gray-200 h-[150px] object-cover rounded-md"/>
           <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
-            <span>{{ product.price }} $</span>
             <span>{{ product.title }}</span>
-            <span v-if="product.selectedSize">Size: {{ product.selectedSize }}</span>
-            <span>Color: {{ product.selectedColor }}</span>
+            <span v-if="product.selectedSize">Talla: {{ product.selectedSize }}</span>
+            <span>Color: {{ SpanishColors[product.selectedColor as Colors] }}</span>
+            <span>${{ product.price }}</span>
           </div>
         </div>
         <div
@@ -87,7 +88,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
     </div>
   </div>
   <div
-      class="flex flex-col fixed w-full z-10 dark:text-white gap-8 bottom-[5%] items-center justify-center"
+      class="flex fixed w-full z-10 bottom-3 items-center justify-center"
       v-if="cartProducts.length > 0"
   >
     <InvoiceDialog/>
