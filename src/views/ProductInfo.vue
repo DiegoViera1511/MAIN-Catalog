@@ -125,7 +125,7 @@ function handleColorChange(color: string) {
               {{ product.title }}
             </h1>
             <button
-                class="flex items-center justify-center flex-shrink-0 bg-gray-200 p-2 rounded-full"
+                class="flex items-center cursor-pointer dark:bg-white dark:text-black justify-center flex-shrink-0 bg-gray-200 p-2 rounded-full"
                 @click="copyPathToClipboard"
             >
               <Share :size="20" />
@@ -141,7 +141,7 @@ function handleColorChange(color: string) {
           <div
               v-for="(color , index) in product.colors"
               :key="index"
-              :class="`flex items-center justify-center p-3 border-3 cursor-pointer ${checkColor === color ? 'border-5 border-gray-400' : ''}  ${BgColors[color as Colors]}`"
+              :class="`flex items-center justify-center p-3 border-3 border-gray-400 cursor-pointer ${checkColor === color ? 'border-5 border-gray-700 dark:border-white' : ''}  ${BgColors[color as Colors]}`"
               @click="handleColorChange(color)"
           >
             <Check v-if="checkColor === color" :color="color === 'white' ? 'black' : 'white'"/>
@@ -155,7 +155,7 @@ function handleColorChange(color: string) {
               v-for="(size, index) in product.sizes"
               :key="index"
               class="flex border-3 font-medium items-center justify-center p-3 cursor-pointer"
-              :class="selectedSize === index ? 'border-black text-black dark:text-white border-5 dark:border-white' : 'border-gray-400 text-gray-400'"
+              :class="selectedSize === index ? 'border-gray-700 text-black dark:text-white border-5 dark:border-white' : 'border-gray-400 text-gray-400'"
               @click="() => selectedSize = index"
           >
             {{ size }}
