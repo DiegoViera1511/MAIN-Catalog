@@ -75,6 +75,7 @@ function goToProduct(productId: number) {
         :imageSrc="product.url"
         :category="product.category"
         :available="product.available"
+        :colors="product.colors"
         @click="goToProduct(product.id)"
     />
   </ProductsContainer>

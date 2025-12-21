@@ -148,8 +148,8 @@ function handleColorChange(color: string) {
           </div>
         </div>
         <p class="text-md text-gray-500 font-medium">{{ SpanishColors[checkColor as Colors]}}</p>
-        <hr class="w-full">
-        <p class="text-md text-gray-500 font-medium">Seleccione una talla</p>
+        <hr v-if="product.sizes.length > 0" class="w-full">
+        <p v-if="product.sizes.length > 0" class="text-md text-gray-500 font-medium">Seleccione una talla</p>
         <div v-if="product.sizes.length > 0" class="grid grid-cols-5 sm:w-1/2">
           <div
               v-for="(size, index) in product.sizes"

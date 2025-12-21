@@ -31,6 +31,11 @@ const props = defineProps({
     type: Boolean,
     required: true,
     default: true
+  },
+  colors:{
+    type: Array as () => string[],
+    required: false,
+    default: () => []
   }
 });
 
@@ -42,7 +47,7 @@ const image: string = (images[props.imageSrc] as string) || props.imageSrc;
 
 <template>
   <div class="flex flex-col w-full hover:shadow-sm items-center justify-center gap-2 py-3 rounded-md">
-    <ProductImage :imageSrc="image" />
+    <ProductImage :imageSrc="image" :colors="props.colors" />
     <div class="flex flex-col w-full justify-start items-start dark:text-white">
       <div class="flex flex-row items-center w-full justify-between">
         <p>{{props.title}}</p>
