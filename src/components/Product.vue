@@ -41,7 +41,7 @@ const image: string = (images[props.imageSrc] as string) || props.imageSrc;
 </script>
 
 <template>
-  <div class="flex flex-col w-full hover:shadow-sm items-center justify-center gap-2 p-3 rounded-md">
+  <div class="flex flex-col w-full hover:shadow-sm items-center justify-center gap-2 py-3 rounded-md">
     <ProductImage :imageSrc="image" />
     <div class="flex flex-col w-full justify-start items-start dark:text-white">
       <div class="flex flex-row items-center w-full justify-between">

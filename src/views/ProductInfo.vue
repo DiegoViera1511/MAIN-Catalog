@@ -161,7 +161,7 @@ function handleColorChange(color: string) {
             {{ size }}
           </div>
         </div>
-        <div class="flex sticky bottom-3 top-auto items-center justify-center w-full">
+        <div class="flex sticky bottom-5 top-auto items-center justify-center w-full">
           <Button
               class="bg-black w-full sm:w-[40%] dark:bg-white text-white dark:text-black hover:bg-gray-200 flex items-center justify-center font-medium p-5 mt-4 rounded-full"
               @click="addProductToCart"

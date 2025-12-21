@@ -31,7 +31,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
 
 <template>
   <div
-      class="flex flex-col transition-all dark:bg-neutral-900 dark:text-white px-4 duration-200 gap-4 justify-start w-full h-full items-start"
+      class="flex flex-col transition-all dark:bg-neutral-900 dark:text-white px-2 duration-200 gap-4 justify-start w-full h-full items-start"
   >
     <h1 class="font-bold text-2xl">Lista de Compra</h1>
     <div class="flex flex-row gap-2 w-full items-center justify-start text-xl"
@@ -50,12 +50,12 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
           v-for="(product,index) in cartProducts"
           :key="index"
       >
-        <div class="flex flex-row w-full justify-between sm:justify-start sm:gap-4 items-center">
+        <div class="flex flex-row w-full items-center justify-start gap-2 ">
           <img :src="product.url" alt="product image" class="w-[150px] bg-gray-200 h-[150px] object-cover rounded-md"/>
-          <div class="flex flex-col items-start justify-center font-medium text-lg w-[150px] h-[150px]">
+          <div class="flex flex-col flex-1 items-start justify-start font-medium text-lg w-[150px] h-[150px]">
             <span>{{ product.title }}</span>
-            <span v-if="product.selectedSize">Talla: {{ product.selectedSize }}</span>
-            <span>Color: {{ SpanishColors[product.selectedColor as Colors] }}</span>
+            <span class="text-neutral-500" v-if="product.selectedSize">Talla: {{ product.selectedSize }}</span>
+            <span class="text-neutral-500">Color: {{ SpanishColors[product.selectedColor as Colors] }}</span>
             <span>${{ product.price }}</span>
           </div>
         </div>
@@ -88,7 +88,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
     </div>
   </div>
   <div
-      class="flex fixed w-full z-10 bottom-3 items-center justify-center"
+      class="flex fixed w-full z-10 bottom-5 items-center justify-center"
       v-if="cartProducts.length > 0"
   >
     <InvoiceDialog/>
