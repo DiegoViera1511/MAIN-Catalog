@@ -19,7 +19,15 @@ const showFooter = computed(() => {
 </script>
 
 <template>
-  <Toaster position="top-right" :close-button="true"/>
+  <Toaster
+      position="top-right"
+      :offset="{
+        top: '4rem',
+      }"
+      :mobile-offset="{
+        top: '4rem',
+      }"
+  />
   <div class="flex flex-col touch-manipulation min-h-screen bg-slate-50 dark:bg-neutral-900">
     <AdminLayout v-if="adminRoute">
       <RouterView/>
