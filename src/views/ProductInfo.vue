@@ -82,6 +82,7 @@ function addProductToCart() {
     url: product.value.url,
     title: product.value.title,
     price: product.value.price,
+    discount_price: product.value.discount_price,
     selectedSize: product.value.sizes[selectedSize.value],
     quantity: quantity.value,
     selectedColor: selectedColor.value || "",
@@ -95,6 +96,16 @@ function addProductToCart() {
 function handleColorChange(color: string) {
   selectedColor.value = color;
 }
+
+//TODO REFACTOR DISCOUNT CALCULATION TO A COMPOSABLE
+const getDiscountPercentage = (): number | null => {
+  if (!product.value?.discount_price) {
+    return null;
+  }
+
+  const discount = ((product.value?.price - product.value?.discount_price) / product.value?.price) * 100;
+  return Math.round(discount);
+};
 
 </script>
 
@@ -131,8 +142,24 @@ function handleColorChange(color: string) {
               <Share :size="20" />
             </button>
           </div>
-          <p class="text-md text-gray-500 font-medium sm:w-[600px]">{{ product.description }}</p>
-          <p class="text-md font-bold">${{ product.price }}</p>
+          <span class="text-md text-gray-500 font-medium sm:w-[600px]">{{ product.description }}</span>
+          <div>
+            <span
+                v-if="product.discount_price"
+                class="text-md font-bold"
+            >
+              ${{ product.discount_price }}
+            </span>
+            <span
+                class="text-md font-bold"
+                :class="product.discount_price ? 'line-through text-red-700 ml-2' : ''"
+            >
+              ${{ product.price }}
+            </span>
+          </div>
+          <div v-if="product.discount_price" class="bg-gray-200 w-fit rounded-sm p-1 px-2">
+            <span class="font-bold">{{getDiscountPercentage()}} % OFF | Ahorra ${{(product.price - product.discount_price).toFixed(2)}}</span>
+          </div>
         </div>
         <hr class="w-full">
         <div

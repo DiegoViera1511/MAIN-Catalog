@@ -69,13 +69,7 @@ function goToProduct(productId: number) {
     <Product
         v-for="product in filteredProducts"
         :key="product.id"
-        :title="product.title"
-        :description="product.description"
-        :price="product.price"
-        :imageSrc="product.url"
-        :category="product.category"
-        :available="product.available"
-        :colors="product.colors"
+        :product="product"
         @click="goToProduct(product.id)"
     />
   </ProductsContainer>

@@ -12,6 +12,7 @@ import {Switch} from "@/components/ui/switch";
 const title = ref('')
 const description = ref('')
 const price = ref<number | null>(null)
+const discountPrice = ref<number | null>(null)
 const category = ref<string[]>([])
 const availableSizes = ['XS', 'S', 'M', 'L', 'XL']
 const selectedSizes = ref<string[]>([])
@@ -27,6 +28,7 @@ const loadingProductInfo = ref(false)
 const message = ref('')
 const fileInput = ref<HTMLInputElement | null>(null)
 const productAvailable = ref<boolean>(false)
+const openDiscountInput = ref(false)
 
 onMounted(async () => {
   try {
@@ -48,6 +50,7 @@ onMounted(async () => {
       title.value = product.title
       description.value = product.description
       price.value = product.price
+      discountPrice.value = product.discount_price
       category.value = product.category
       selectedSizes.value = product.sizes
       selectedColors.value = product.colors
@@ -57,11 +60,15 @@ onMounted(async () => {
       title.value = response.title
       description.value = response.description
       price.value = response.price
+      discountPrice.value = response.discount_price
       category.value = response.category
       selectedSizes.value = response.sizes
       selectedColors.value = response.colors
       selectedImages.value = response.images || []
       productAvailable.value = response.available
+    }
+    if (discountPrice.value) {
+      openDiscountInput.value = true
     }
   } catch (error) {
     console.error('Error:', error);
@@ -132,6 +139,12 @@ const handleSubmit = async () => {
     return
   }
 
+  if (discountPrice.value && discountPrice.value >= price.value) {
+    message.value = 'El precio con descuento debe ser menor que el precio original.'
+    toast.error(message.value)
+    return;
+  }
+
   loading.value = true
   message.value = ''
 
@@ -187,6 +200,7 @@ const handleSubmit = async () => {
         images: imageUrls, // All images
         url: imageUrls[0], // Primary image
         price: price.value,
+        discount_price: discountPrice.value,
         category: category.value,
         sizes: selectedSizes.value,
         stock: 0,
@@ -253,8 +267,18 @@ const toggleAvailable = () => {
   productAvailable.value = !productAvailable.value
 }
 
+const getDiscountPercentage = (): number | null => {
+  if (!price.value || !discountPrice.value) {
+    return null;
+  }
+
+  const discount = ((price.value - discountPrice.value) / price.value) * 100;
+  return Math.round(discount); // Redondea al entero más cercano
+};
+
 const labelClass = 'block mb-1 font-medium dark:text-white'
 const inputClass = 'w-full bg-gray-200 dark:text-white dark:bg-neutral-700 rounded px-2 py-1'
+
 </script>
 
 <template>
@@ -287,10 +311,37 @@ const inputClass = 'w-full bg-gray-200 dark:text-white dark:bg-neutral-700 round
             v-model.number="price"
             type="number"
             min="0"
-            step="0.01"
+            step="0.1"
             :class="inputClass"
             required
         />
+      </div>
+      <hr class="w-full"/>
+      <div class="flex flex-col" v-if="openDiscountInput">
+        <label :class="labelClass">Precio con descuento</label>
+        <div class="flex flex-row gap-2">
+          <input
+              v-model.number="discountPrice"
+              type="number"
+              min="0"
+              step="0.1"
+              :class="inputClass"
+          />
+          <Button @click="() => { openDiscountInput = false; discountPrice = null; }">
+            <X/>
+          </Button>
+        </div>
+        <div v-if="discountPrice && price" class="bg-gray-200 w-fit mt-3 rounded-sm p-2">
+          <span class="font-bold">{{getDiscountPercentage()}} % OFF | Ahorra ${{(price - discountPrice).toFixed(2)}}</span>
+        </div>
+      </div>
+      <div v-else>
+        <Button @click="() => {
+          openDiscountInput = true
+          discountPrice = price
+        }">
+          Añadir precio con descuento
+        </Button>
       </div>
       <hr class="w-full"/>
       <div>
