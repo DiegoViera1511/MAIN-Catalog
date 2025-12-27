@@ -25,14 +25,14 @@ const cartProducts = computed(() => {
 })
 
 function getCartTotal() {
-  return cartProducts.value.reduce((sum, product) => sum + product.price * product.quantity, 0).toFixed(2);
+  return cartProducts.value.reduce((sum, product) => sum + (product.discount_price ?? product.price) * product.quantity, 0).toFixed(2);
 }
 
 function getInvoiceText() {
   const store = useProductStore();
   const products = store.cart;
   const lines = products.map(product => {
-    const lineTotal = (product.price * product.quantity).toFixed(2);
+    const lineTotal = ((product.discount_price ?? product.price) * product.quantity).toFixed(2);
     return `${product.title} ${ product.selectedSize ? '\nTalla: ' + product.selectedSize : '' }\nColor: ${SpanishColors[product.selectedColor as Colors]} \nCantidad: ${product.quantity} \nPrecio: $${lineTotal} \n------------------------------`;
   });
   lines.push(`Total: ${getCartTotal()} $`);
@@ -98,7 +98,11 @@ function goToContacts(){
           <p v-if="product.selectedSize">Talla: {{ product.selectedSize }}</p>
           <p>Color: {{ SpanishColors[product.selectedColor as Colors] }}</p>
           <p>Cantidad: {{ product.quantity }}</p>
-          <p>Precio: ${{ product.price }}</p>
+          <div class="flex flex-row gap-2">
+            <p>Precio: </p>
+            <p v-if="product.discount_price">${{product.discount_price}}</p>
+            <p :class="`${product.discount_price ? 'line-through' : ''}`">${{ product.price }}</p>
+          </div>
           <p>----------------------</p>
         </div>
         <p>Total: {{ getCartTotal() }} $</p>

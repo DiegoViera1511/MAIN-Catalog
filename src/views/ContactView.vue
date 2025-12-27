@@ -10,14 +10,14 @@ const cartProducts = computed(() => {
 })
 
 function getCartTotal() {
-  return cartProducts.value.reduce((sum, product) => sum + product.price * product.quantity, 0).toFixed(2);
+  return cartProducts.value.reduce((sum, product) => sum + (product.discount_price ?? product.price) * product.quantity, 0).toFixed(2);
 }
 
 function getInvoiceText() {
   const store = useProductStore();
   const products = store.cart;
   const lines = products.map(product => {
-    const lineTotal = (product.price * product.quantity).toFixed(2);
+    const lineTotal = ((product.discount_price ?? product.price) * product.quantity).toFixed(2);
     return `${product.title}%20${product.selectedSize ? '%0ATalla:%20' + product.selectedSize : ''}%20%0AColor:%20${SpanishColors[product.selectedColor as Colors]}%20%20%0ACantidad:%20${product.quantity}%20%0APrecio:%20$${lineTotal}%20%20%0A------------------------------`;
   });
   if (products.length > 0) {
@@ -120,7 +120,3 @@ function getInvoiceText() {
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

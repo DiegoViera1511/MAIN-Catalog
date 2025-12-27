@@ -16,7 +16,7 @@ onMounted(() => {
 })
 
 function getCartTotal() {
-  return cartProducts.value.reduce((sum, product) => sum + product.price * product.quantity, 0);
+  return cartProducts.value.reduce((sum, product) => sum + (product.discount_price ?? product.price) * product.quantity, 0);
 }
 
 function getCartCount() {
@@ -56,7 +56,18 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
             <span>{{ product.title }}</span>
             <span class="text-neutral-500" v-if="product.selectedSize">Talla: {{ product.selectedSize }}</span>
             <span class="text-neutral-500">Color: {{ SpanishColors[product.selectedColor as Colors] }}</span>
-            <span>${{ product.price }}</span>
+            <div>
+              <span
+                  v-if="product.discount_price"
+              >
+                ${{ product.discount_price }}
+              </span>
+                <span
+                    :class="product.discount_price ? 'line-through text-red-700 ml-2' : ''"
+                >
+                ${{ product.price }}
+              </span>
+            </div>
           </div>
         </div>
         <div
