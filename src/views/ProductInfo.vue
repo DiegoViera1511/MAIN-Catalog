@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from "vue";
-import {BgColors, SpanishColors, type CartProduct, Colors, type ProductType} from "../types.ts";
+import {BgColors, SpanishColors, type CartProduct, Colors, type ProductType} from "../lib/types.ts";
 import {useProductStore} from "../store/productStore.ts";
 import {useRoute} from "vue-router";
 import {Check, LoaderCircle, Share} from "lucide-vue-next"
@@ -110,8 +110,8 @@ const getDiscountPercentage = (): number | null => {
 </script>
 
 <template>
-  <div class="flex justify-center dark:text-white items-start w-full">
-    <div v-if="loading" class="flex justify-center w-full items-center h-52">
+  <div class="flex mt-8 flex-1 justify-center dark:text-white items-start h-screen w-full">
+    <div v-if="loading" class="flex flex-1 justify-center w-full h-full items-center">
       <div class="flex dark:text-white items-center justify-center  w-full">
         <LoaderCircle class="animate-spin" :size="50"/>
       </div>

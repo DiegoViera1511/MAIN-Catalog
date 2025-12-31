@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import {useProductStore} from "../store/productStore.ts";
-import type {CartProduct} from "../types.ts";
+import type {CartProduct} from "../lib/types.ts";
 
 const isMobile = ref(false);
 const isDarkMode = ref(false);

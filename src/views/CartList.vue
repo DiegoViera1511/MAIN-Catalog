@@ -2,9 +2,9 @@
 import {useProductStore} from "../store/productStore.ts";
 import {Minus, Plus, Trash} from "lucide-vue-next";
 import {computed, onMounted, ref} from "vue";
-import {type CartProduct, SpanishColors} from "../types.ts";
+import {type CartProduct, SpanishColors} from "../lib/types.ts";
 import InvoiceDialog from "@/components/InvoiceDialog.vue";
-import {Colors} from "../types.ts";
+import {Colors} from "../lib/types.ts";
 
 const cartProducts = ref<CartProduct[]>([])
 const cartTotalCount = computed(() => getCartCount())
@@ -31,7 +31,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
 
 <template>
   <div
-      class="flex flex-col transition-all dark:bg-neutral-900 dark:text-white px-2 duration-200 gap-4 justify-start w-full h-full items-start"
+      class="flex flex-col mt-8 transition-all dark:bg-neutral-900 dark:text-white px-2 duration-200 gap-4 justify-start w-full h-full items-start"
   >
     <h1 class="font-bold text-2xl">Lista de Compra</h1>
     <div class="flex flex-row gap-2 w-full items-center justify-start text-xl"
@@ -43,7 +43,7 @@ function removeProduct(id: number, selectedSize: string, selectedColor: string) 
     </div>
     <div class="flex flex-col gap-3 w-full">
       <div class="flex w-full items-center justify-center">
-        <span v-if="cartTotalPrice == 0" class="font-medium text-2xl">No hay productos en tu lista de compras.</span>
+        <span v-if="cartTotalPrice == 0" class="font-medium text-2xl text-gray-500">No hay productos en tu lista de compras.</span>
       </div>
       <div
           class="flex flex-col items-center border-b-2 pb-3 border-b-gray-200 dark:border-b-gray-700 gap-4 w-full justify-between"

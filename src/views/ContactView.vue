@@ -2,7 +2,7 @@
 import {MessageCircle, Send, Instagram, Link} from "lucide-vue-next";
 import {useProductStore} from "@/store/productStore.ts";
 import {computed} from "vue";
-import {Colors, SpanishColors} from "@/types.ts";
+import {Colors, SpanishColors} from "@/lib/types.ts";
 
 const cartProducts = computed(() => {
   const store = useProductStore();
@@ -30,7 +30,7 @@ function getInvoiceText() {
 
 <template>
   <div
-      class="flex flex-col transition-all dark:bg-neutral-900 dark:text-white px-2 duration-200 gap-4 justify-start w-full h-full items-start"
+      class="flex flex-col mt-8 transition-all dark:bg-neutral-900 dark:text-white px-2 duration-200 gap-4 justify-start w-full h-full items-start"
   >
     <h1 class="font-bold text-2xl">Contactos</h1>
     <div class="flex flex-col gap-3 w-full">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import LoadContainer from "@/components/LoadContainer.vue";
 import {ref} from "vue";
-import {BgColors, Colors} from "@/types.ts";
+import {BgColors, Colors} from "@/lib/types.ts";
 
 const props = defineProps<{
   imageSrc: string,

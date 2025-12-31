@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type {CartProduct, ProductType} from "../types.ts";
+import type {CartProduct, ProductType} from "../lib/types.ts";
 
 interface ProductState {
     allProducts: ProductType[];

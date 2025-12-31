@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import type {ProductType} from "@/types.ts";
+import type {ProductType} from "@/lib/types.ts";
 import {supabase} from "@/lib/supabase.ts";
 import AlertDialogDeleteProduct from "@/components/AlertDialogDeleteProduct.vue";
 import {LoaderCircle, SquarePen} from "lucide-vue-next";

@@ -3,7 +3,7 @@ import {onMounted, ref} from 'vue'
 import {supabase} from '@/lib/supabase.ts'
 import {Button} from '@/components/ui/button'
 import {toast} from 'vue-sonner'
-import {BgColors, Colors, type ProductType} from '@/types.ts'
+import {BgColors, Colors, type ProductType} from '@/lib/types.ts'
 import {Check, LoaderCircle, X} from 'lucide-vue-next'
 import {useProductStore} from "@/store/productStore.ts";
 import {useRoute} from "vue-router";

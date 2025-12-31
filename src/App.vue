@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Toaster } from '@/components/ui/sonner'
-import 'vue-sonner/style.css' // vue-sonner v2 requires this import
+import 'vue-sonner/style.css'
 import {useRoute} from "vue-router";
 import {computed} from "vue";
 import AdminLayout from "@/layouts/AdminLayout.vue";
 import StoreLayout from "@/layouts/StoreLayout.vue";
+import {Routes} from "@/lib/routes.ts";
 
 const route = useRoute();
 
@@ -13,7 +14,7 @@ const adminRoute = computed(() => {
 })
 
 const showFooter = computed(() => {
-  return !(route.path === "/contact" || route.path === "/cart");
+  return !(route.path === Routes.CONTACT || route.path === Routes.CART);
 })
 
 </script>
@@ -28,7 +29,7 @@ const showFooter = computed(() => {
         top: '4rem',
       }"
   />
-  <div class="flex flex-col touch-manipulation min-h-screen bg-slate-50 dark:bg-neutral-900">
+  <div class="touch-manipulation min-h-screen bg-slate-50 dark:bg-neutral-900">
     <AdminLayout v-if="adminRoute">
       <RouterView/>
     </AdminLayout>

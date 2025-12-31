@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ProductImage from "@/components/ProductImage.vue";
-import type {ProductType} from "@/types.ts";
+import type {ProductType} from "@/lib/types.ts";
 
 const props = defineProps<{
   product: ProductType

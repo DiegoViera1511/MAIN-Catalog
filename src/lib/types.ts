@@ -1,10 +1,4 @@
-export enum Category {
-    WOMEN = "WOMEN",
-    MEN= "MEN",
-    ACCESSORIES ="ACCESSORIES"
-}
-
-export interface ProductType {
+    export interface ProductType {
     id:number,
     title:string,
     created_at: string,

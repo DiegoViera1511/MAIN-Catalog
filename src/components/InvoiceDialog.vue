@@ -14,7 +14,7 @@ import {computed, ref} from "vue";
 import {Check,Copy} from "lucide-vue-next";
 import {useRouter} from "vue-router";
 import {Button} from "@/components/ui/button";
-import {Colors, SpanishColors} from "@/types.ts";
+import {Colors, SpanishColors} from "@/lib/types.ts";
 
 const copied = ref(false)
 const router = useRouter();
