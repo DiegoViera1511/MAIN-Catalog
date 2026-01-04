@@ -29,7 +29,7 @@ const showFooter = computed(() => {
         top: '4rem',
       }"
   />
-  <div class="touch-manipulation min-h-screen bg-slate-50 dark:bg-neutral-900">
+  <div class="flex flex-col touch-manipulation min-h-screen bg-slate-50 dark:bg-neutral-900">
     <AdminLayout v-if="adminRoute">
       <RouterView/>
     </AdminLayout>

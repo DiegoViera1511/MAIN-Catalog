@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import ProductInfo from "../views/ProductInfo.vue";
 import Home from "../views/Home.vue";
 import CartList from "../views/CartList.vue";
-import ContactView from "@/views/ContactView.vue";
+import ContactView from "@/views/contacts/ContactView.vue";
 import AdminLogIn from "@/views/admin/AdminLogIn.vue";
 import AdminDashboard from "@/views/admin/AdminDashboard.vue";
 import NewProduct from "@/views/admin/NewProduct.vue";
@@ -18,7 +18,7 @@ const routes = [
     {
         path: '/men',
         component: Home,
-        name: 'Man',
+        name: 'Men',
     },
     {
         path: '/women',

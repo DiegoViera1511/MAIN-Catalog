@@ -51,7 +51,7 @@
 
 <template>
   <nav
-      class="flex w-full flex-shrink-0 z-30 items-center bg-slate-50 dark:bg-neutral-900 dark:text-white"
+      class="flex fixed w-full flex-shrink-0 z-30 items-center bg-slate-50 dark:bg-neutral-900 dark:text-white"
   >
     <div
         class="flex flex-row items-center w-full gap-4"

@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import LoadContainer from "@/components/LoadContainer.vue";
+import LoadImageContainer from "@/components/LoadImageContainer.vue";
 import {ref} from "vue";
 import {BgColors, Colors} from "@/lib/types.ts";
+import {getDiscountPercentage} from "@/lib/utils.ts";
+import DiscountPoster from "@/components/DiscountPoster.vue";
 
 const props = defineProps<{
   imageSrc: string,
@@ -15,16 +17,6 @@ function setLoadOff() {
   isLoadingImage.value = false;
 }
 
-//TODO REFACTOR DISCOUNT CALCULATION TO A COMPOSABLE
-const getDiscountPercentage = (): number | null => {
-  if (!props?.discount_price || !props?.price) {
-    return null;
-  }
-
-  const discount = ((props.price - props.discount_price) / props.price) * 100;
-  return Math.round(discount);
-};
-
 </script>
 
 <template>
@@ -34,14 +26,15 @@ const getDiscountPercentage = (): number | null => {
     <img
         loading="lazy"
         @load="setLoadOff"
-        :style="{ opacity: isLoadingImage ? 0 : 1, transition: 'opacity 0.3s' }"
-        class="object-cover" :src="props.imageSrc" alt=""
+        :class="`${ isLoadingImage ? 'opacity-0' : 'opacity-100'} transition-opacity object-cover`"
+        :src="props.imageSrc"
+        alt="product"
     >
     <div
         v-if="isLoadingImage"
-        class="absolute w-full h-full flex items-center justify-center  "
+        class="absolute w-full h-full flex items-center justify-center"
     >
-      <LoadContainer />
+      <LoadImageContainer />
     </div>
     <div
         v-if="props.colors && props.colors.length > 0"
@@ -53,11 +46,11 @@ const getDiscountPercentage = (): number | null => {
           :class="`w-6 h-6 rounded-full border-2 cursor-pointer ${BgColors[color as Colors]}`"
       ></div>
     </div>
-    <div
+    <DiscountPoster
         v-if="props.discount_price && props.price"
-        class="absolute top-2 right-2 bg-gray-200 w-fit rounded-sm p-1 px-2"
-    >
-      <span class="font-bold">{{getDiscountPercentage()}} % OFF</span>
-    </div>
+        :price="props.price"
+        :discount_price="props.discount_price"
+        cn="absolute top-2 right-2"
+    />
   </div>
 </template>

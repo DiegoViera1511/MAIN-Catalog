@@ -6,16 +6,12 @@ const props = defineProps<{
   product: ProductType
 }>();
 
-
-const images = import.meta.glob('../assets/images/*', { eager: true });
-const image: string = (images[props.product.url] as string) || props.product.url
-
 </script>
 
 <template>
   <div class="flex flex-col w-full hover:shadow-sm items-center justify-center gap-2 py-3 rounded-md">
     <ProductImage
-        :imageSrc="image"
+        :imageSrc="props.product.url"
         :colors="props.product.colors"
         :price="props.product.price"
         :discount_price="props.product.discount_price"

@@ -13,11 +13,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col h-screen">
-    <Navbar/>
-    <div class="flex flex-col overflow-auto flex-1">
-      <slot/>
-      <Footer v-if="props.showFooter"/>
-    </div>
+  <Navbar/>
+  <div class="flex flex-1 pt-20 flex-col overflow-auto">
+    <slot/>
+    <Footer v-if="props.showFooter"/>
   </div>
 </template>
