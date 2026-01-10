@@ -18,7 +18,3 @@ const props = defineProps<{
     <span v-if="props.large">| Ahorra ${{(props.price - props.discount_price).toFixed(2)}}</span>
   </div>
 </template>
-
-<style scoped>
-
-</style>

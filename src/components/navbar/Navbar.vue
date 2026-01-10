@@ -5,7 +5,7 @@
   import type {CartProduct} from "@/lib/types.ts";
   import {useRoute, useRouter} from "vue-router";
   import {Routes} from "@/lib/routes.ts";
-  import NavbarItem from "@/components/Navbar/NavbarItem.vue";
+  import NavbarItem from "@/components/navbar/NavbarItem.vue";
 
   const isMobile = ref(false);
   const openMenu = ref(false);

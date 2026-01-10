@@ -13,7 +13,7 @@ import {sleep} from "@/lib/utils.ts";
 import DiscountPoster from "@/components/DiscountPoster.vue";
 import LoadContainer from "@/components/LoadContainer.vue";
 
-const product = ref<ProductType | undefined>(undefined)
+const product = ref<ProductType | null>(null)
 const productStore = useProductStore()
 const selectedSize = ref<number>(0)
 const selectedColor = ref<string>("")
@@ -139,6 +139,7 @@ function handleColorChange(color: string) {
       </div>
       <hr class="w-full">
       <div
+          v-if="product.colors.length > 0"
           class="grid grid-cols-5 sm:w-1/2"
       >
         <div
@@ -150,8 +151,8 @@ function handleColorChange(color: string) {
           <Check v-if="checkColor === color" :color="color === 'white' ? 'black' : 'white'"/>
         </div>
       </div>
-      <p class="text-md text-gray-500 font-medium">{{ SpanishColors[checkColor as Colors]}}</p>
-      <hr v-if="product.sizes.length > 0" class="w-full">
+      <p v-if="product.colors.length > 0" class="text-md text-gray-500 font-medium">{{ SpanishColors[checkColor as Colors]}}</p>
+      <hr v-if="product.colors.length > 0" class="w-full">
       <p v-if="product.sizes.length > 0" class="text-md text-gray-500 font-medium">Seleccione una talla</p>
       <div v-if="product.sizes.length > 0" class="grid grid-cols-5 sm:w-1/2">
         <div

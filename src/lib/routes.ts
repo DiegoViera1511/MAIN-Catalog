@@ -12,3 +12,7 @@ export enum Routes {
     ADMIN_EDIT_PRODUCT = "/admin/stock/edit/", // + :id
     ADMIN_STOCK = "/admin/stock"
 }
+
+export enum SupaBaseRoutes {
+    IMAGES = "public/images/" // + fileName
+}

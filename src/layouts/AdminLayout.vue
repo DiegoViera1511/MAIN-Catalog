@@ -45,7 +45,7 @@ const checkSession = async () => {
 
 <template v-if="isAuth">
   <AdminNavbar/>
-  <div class="flex flex-1 mt-24 mb-28 p-5">
+  <div class="flex flex-1 my-20 px-3 ">
     <slot/>
   </div>
 </template>

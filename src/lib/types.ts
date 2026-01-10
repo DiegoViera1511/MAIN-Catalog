@@ -4,6 +4,14 @@ export enum Categories {
     ACCESSORIES = "ACCESSORIES",
 }
 
+export const SpanishCategories = {
+    [Categories.MEN] : "Hombre",
+    [Categories.WOMEN] : "Mujer",
+    [Categories.ACCESSORIES] : "Accesorio",
+}
+
+export const availableSizes = ['XS', 'S', 'M', 'L', 'XL']
+
 export interface ProductType {
     id:number,
     title:string,

@@ -2,7 +2,6 @@
 import LoadImageContainer from "@/components/LoadImageContainer.vue";
 import {ref} from "vue";
 import {BgColors, Colors} from "@/lib/types.ts";
-import {getDiscountPercentage} from "@/lib/utils.ts";
 import DiscountPoster from "@/components/DiscountPoster.vue";
 
 const props = defineProps<{

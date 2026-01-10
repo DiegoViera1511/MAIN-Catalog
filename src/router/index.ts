@@ -1,72 +1,73 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import ProductInfo from "../views/ProductInfo.vue";
 import Home from "../views/Home.vue";
 import CartList from "../views/CartList.vue";
 import ContactView from "@/views/contacts/ContactView.vue";
 import AdminLogIn from "@/views/admin/AdminLogIn.vue";
-import AdminDashboard from "@/views/admin/AdminDashboard.vue";
+import AdminDashboard from "@/views/admin/dashboard/AdminDashboard.vue";
 import NewProduct from "@/views/admin/NewProduct.vue";
 import StockView from "@/views/admin/StockView.vue";
 import EditProduct from '@/views/admin/EditProduct.vue';
+import {Routes} from "@/lib/routes.ts";
 
 const routes = [
     {
-        path: '/',
+        path: Routes.HOME,
         component: Home,
         name: 'Home',
     },
     {
-        path: '/men',
+        path: Routes.MEN,
         component: Home,
         name: 'Men',
     },
     {
-        path: '/women',
+        path: Routes.WOMEN,
         component: Home,
         name: 'Women',
     },
     {
-        path: '/accessories',
+        path: Routes.ACCESSORIES,
         component: Home,
         name: 'Accessories',
     },
     {
-        path: '/product/:id',
+        path: Routes.PRODUCT_INFO + ':id',
         component: ProductInfo,
         name: 'ProductInfo',
     },
     {
-        path: '/cart',
+        path: Routes.CART,
         component: CartList,
         name: 'CartList',
     },
     {
-        path: '/contact',
+        path: Routes.CONTACT,
         component: ContactView,
         name: 'Contact',
     },
     {
-        path: '/admin/login',
+        path: Routes.ADMIN_LOGIN,
         component: AdminLogIn,
         name: 'AdminLogIn',
     },
     {
-        path: '/admin/dashboard',
+        path: Routes.ADMIN_DASHBOARD,
         component: AdminDashboard,
         name: 'AdminDashboard',
     },
     {
-        path: '/admin/new-product',
+        path: Routes.ADMIN_NEW_PRODUCT,
         component: NewProduct,
         name: 'NewProduct',
     },
     {
-        path: '/admin/stock/edit/:id',
+        path: Routes.ADMIN_EDIT_PRODUCT + ':id',
         component: EditProduct,
         name: 'EditProduct',
     },
     {
-        path: '/admin/stock',
+        path: Routes.ADMIN_STOCK,
         component: StockView,
         name: 'StockView',
     }
