@@ -3,19 +3,18 @@ import Navbar from "@/components/navbar/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 
 const props = defineProps({
-  showFooter:{
+  showFooter: {
     type: Boolean,
     required: false,
-    default: true
+    default: true,
   },
-})
-
+});
 </script>
 
 <template>
-  <Navbar/>
+  <Navbar />
   <div class="flex flex-1 pt-20 flex-col overflow-auto">
-    <slot/>
-    <Footer v-if="props.showFooter"/>
+    <slot />
+    <Footer v-if="props.showFooter" />
   </div>
 </template>

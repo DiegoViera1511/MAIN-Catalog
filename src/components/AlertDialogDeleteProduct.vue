@@ -9,17 +9,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import {LoaderCircle, Trash} from "lucide-vue-next"
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { LoaderCircle, Trash } from "lucide-vue-next";
 import { ref } from "vue";
-import {toast} from "vue-sonner";
-import type {ProductType} from "@/lib/types.ts";
-import {deleteProductByIdService} from "@/services/product-service.ts";
+import { toast } from "vue-sonner";
+import type { ProductType } from "@/lib/types.ts";
+import { deleteProductByIdService } from "@/services/product-service.ts";
 
 const props = defineProps<{
-  product: ProductType
-}>()
+  product: ProductType;
+}>();
 
 const loading = ref(false);
 
@@ -28,7 +28,10 @@ const emit = defineEmits(["deleted"]);
 async function handleDelete() {
   loading.value = true;
   try {
-    const productDeleted = await deleteProductByIdService(props.product.id, props.product.images);
+    const productDeleted = await deleteProductByIdService(
+      props.product.id,
+      props.product.images,
+    );
     if (!productDeleted) {
       toast.error("Error al eliminar el producto");
       return;
@@ -42,7 +45,6 @@ async function handleDelete() {
     loading.value = false;
   }
 }
-
 </script>
 
 <template>
@@ -56,12 +58,17 @@ async function handleDelete() {
       <AlertDialogHeader>
         <AlertDialogTitle>¿ Estás seguro ?</AlertDialogTitle>
         <AlertDialogDescription>
-          Esta acción no se puede deshacer. Esto eliminará el producto de forma permanente.
+          Esta acción no se puede deshacer. Esto eliminará el producto de forma
+          permanente.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancelar</AlertDialogCancel>
-        <AlertDialogAction class="bg-red-600 hover:bg-red-700" :disabled="loading" @click="handleDelete">
+        <AlertDialogAction
+          class="bg-red-600 hover:bg-red-700"
+          :disabled="loading"
+          @click="handleDelete"
+        >
           <LoaderCircle v-if="loading" class="animate-spin" />
           <span v-else>Eliminar</span>
         </AlertDialogAction>
