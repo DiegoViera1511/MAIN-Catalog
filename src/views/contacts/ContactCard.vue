@@ -20,7 +20,7 @@ const props = defineProps<{
       rel="noopener noreferrer"
   >
     <div
-        class="flex flex-row gap-4 shadow items-center justify-between text-lg bg-gray-100  p-4 rounded-lg hover:shadow-md w-full"
+        class="flex flex-row gap-4 shadow items-center justify-between text-lg bg-gray-100 dark:bg-neutral-800 p-4 rounded-lg hover:shadow-md w-full"
     >
       <div class="flex flex-row gap-4 items-center justify-start">
         <component :class="textIconColor" :is="props.socialNetworkIcon" />
