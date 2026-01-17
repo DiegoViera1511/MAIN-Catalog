@@ -1,0 +1,124 @@
+export enum Categories {
+  MEN = "MEN",
+  WOMEN = "WOMEN",
+  ACCESSORIES = "ACCESSORIES",
+}
+
+export const SpanishCategories = {
+  [Categories.MEN]: "Hombre",
+  [Categories.WOMEN]: "Mujer",
+  [Categories.ACCESSORIES]: "Accesorio",
+};
+
+export const availableSizes = ["XS", "S", "M", "L", "XL"];
+
+export interface ProductType {
+  id: number;
+  title: string;
+  created_at: string;
+  description: string;
+  images: string[];
+  url: string;
+  price: number;
+  discount_price: number | null;
+  category: string[];
+  sizes: string[];
+  stock: number;
+  colors: string[];
+  available: boolean;
+}
+
+export interface CartProduct {
+  id: number;
+  url: string;
+  title: string;
+  price: number;
+  discount_price: number | null;
+  selectedSize: string;
+  selectedColor: string;
+  quantity: number;
+}
+
+export enum Colors {
+  RED = "red",
+  DARK_RED = "dark-red",
+  AMBER = "amber",
+  YELLOW = "yellow",
+  BROWN = "brown",
+  BEIGE = "beige",
+  LIME = "lime",
+  GREEN = "green",
+  LIGHT_GREEN = "light-green",
+  DARK_LIME = "dark-lime",
+  TEAL = "teal",
+  LIGHT_SKY = "light-sky",
+  SKY = "sky",
+  DARK_SKY = "dark-sky",
+  BLUE = "blue",
+  VIOLET = "violet",
+  LIGHT_VIOLET = "light-violet",
+  FUCHSIA = "fuchsia",
+  PINK = "pink",
+  LIGHT_PINK = "light-pink",
+  GRAY = "gray",
+  LIGHT_GRAY = "light-gray",
+  STONE = "stone",
+  BLACK = "black",
+  WHITE = "white",
+}
+
+export const SpanishColors = {
+  [Colors.RED]: "Rojo",
+  [Colors.DARK_RED]: "Rojo Oscuro",
+  [Colors.BEIGE]: "Beige",
+  [Colors.AMBER]: "Amber",
+  [Colors.YELLOW]: "Amarillo",
+  [Colors.BROWN]: "Marrón",
+  [Colors.LIME]: "Lima",
+  [Colors.GREEN]: "Verde",
+  [Colors.LIGHT_GREEN]: "Verde Claro",
+  [Colors.DARK_LIME]: "Lima Oscuro",
+  [Colors.TEAL]: "Teal",
+  [Colors.LIGHT_SKY]: "Cielo Claro",
+  [Colors.SKY]: "Cielo",
+  [Colors.DARK_SKY]: "Cielo Oscuro",
+  [Colors.BLUE]: "Azul",
+  [Colors.VIOLET]: "Violeta",
+  [Colors.LIGHT_VIOLET]: "Violeta Claro",
+  [Colors.FUCHSIA]: "Fuchsia",
+  [Colors.PINK]: "Rosado",
+  [Colors.LIGHT_PINK]: "Rosado Claro",
+  [Colors.GRAY]: "Gris",
+  [Colors.LIGHT_GRAY]: "Gris Claro",
+  [Colors.STONE]: "Gris Oscuro",
+  [Colors.BLACK]: "Negro",
+  [Colors.WHITE]: "Blanco",
+};
+
+export const BgColors = {
+  [Colors.RED]: "bg-red-500",
+  [Colors.DARK_RED]: "bg-rose-800",
+  [Colors.BEIGE]: "bg-orange-100",
+  [Colors.AMBER]: "bg-amber-500",
+  [Colors.YELLOW]: "bg-yellow-300",
+  [Colors.BROWN]: "bg-yellow-900",
+  [Colors.LIME]: "bg-lime-500",
+  [Colors.GREEN]: "bg-green-500",
+  [Colors.LIGHT_GREEN]: "bg-green-300",
+  [Colors.DARK_LIME]: "bg-lime-800",
+  [Colors.TEAL]: "bg-teal-500",
+  [Colors.LIGHT_SKY]: "bg-sky-200",
+  [Colors.SKY]: "bg-sky-500",
+  [Colors.DARK_SKY]: "bg-sky-700",
+  [Colors.BLUE]: "bg-blue-500",
+  [Colors.VIOLET]: "bg-violet-500",
+  [Colors.LIGHT_VIOLET]: "bg-violet-300",
+  [Colors.FUCHSIA]: "bg-fuchsia-500",
+  [Colors.PINK]: "bg-pink-500",
+  [Colors.LIGHT_PINK]: "bg-pink-200",
+  [Colors.GRAY]: "bg-gray-500",
+  [Colors.LIGHT_GRAY]: "bg-gray-300",
+  [Colors.STONE]: "bg-stone-500",
+  [Colors.BLACK]: "bg-black",
+  [Colors.WHITE]: "bg-white",
+};

@@ -7,41 +7,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
 
-import {useProductStore} from "@/store/productStore.ts";
-import {computed, ref} from "vue";
-import {Check,Copy} from "lucide-vue-next";
-import {useRouter} from "vue-router";
-import {Button} from "@/components/ui/button";
-import {Colors, SpanishColors} from "@/types.ts";
+import { useProductStore } from "@/store/productStore.ts";
+import { ref } from "vue";
+import { Check, Copy } from "lucide-vue-next";
+import { useRouter } from "vue-router";
+import { Button } from "@/components/ui/button";
+import { copyTextToClipboard, decodeUrlText, sleep } from "@/lib/utils.ts";
+import { Routes } from "@/lib/routes.ts";
 
-const copied = ref(false)
+const store = useProductStore();
+const copied = ref(false);
 const router = useRouter();
-
-const cartProducts = computed(() => {
-  const store = useProductStore();
-  return store.cart
-})
-
-function getCartTotal() {
-  return cartProducts.value.reduce((sum, product) => sum + (product.discount_price ?? product.price) * product.quantity, 0).toFixed(2);
-}
-
-function getInvoiceText() {
-  const store = useProductStore();
-  const products = store.cart;
-  const lines = products.map(product => {
-    const lineTotal = ((product.discount_price ?? product.price) * product.quantity).toFixed(2);
-    return `${product.title} ${ product.selectedSize ? '\nTalla: ' + product.selectedSize : '' }\nColor: ${SpanishColors[product.selectedColor as Colors]} \nCantidad: ${product.quantity} \nPrecio: $${lineTotal} \n------------------------------`;
-  });
-  lines.push(`Total: ${getCartTotal()} $`);
-  return lines.join('\n');
-}
-
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 function onCopy() {
   copied.value = true;
@@ -51,22 +29,21 @@ function onCopy() {
 }
 
 function copyInvoiceToClipboard() {
-  const invoiceText = getInvoiceText();
-  navigator.clipboard.writeText(invoiceText)
-  onCopy()
+  const invoiceText = store.getCartInvoiceText();
+  copyTextToClipboard(invoiceText);
+  onCopy();
 }
 
-function goToContacts(){
-  router.push('/contact')
+function goToContacts() {
+  router.push(Routes.CONTACT);
 }
-
 </script>
 
 <template>
   <Dialog>
     <DialogTrigger>
       <Button
-          class="flex items-center justify-center bg-black w-full dark:bg-white text-white dark:text-black hover:bg-gray-200 font-medium p-5 rounded-full"
+        class="flex items-center justify-center bg-black w-full dark:bg-white text-white dark:text-black hover:bg-gray-200 font-medium p-5 rounded-full"
       >
         Contactar Administrador
       </Button>
@@ -75,43 +52,29 @@ function goToContacts(){
       <DialogHeader>
         <DialogTitle> Pedido</DialogTitle>
         <DialogDescription>
-          El pedido se copiará en el portapapeles de tu dispositivo. Por favor, compártelo con el vendedor en un
-          mensaje.
+          El pedido se copiará en el portapapeles de tu dispositivo. Por favor,
+          compártelo con el vendedor en un mensaje.
         </DialogDescription>
       </DialogHeader>
       <div class="flex w-full items-center justify-end">
         <button
-            class="bg-gray-100 rounded-full p-2 hover:bg-gray-200"
-            @click="copyInvoiceToClipboard"
+          class="bg-gray-100 rounded-full p-2 hover:bg-gray-200"
+          @click="copyInvoiceToClipboard"
         >
-          <Copy v-if="!copied" :size="15"/>
-          <Check v-else :size="15"/>
+          <Copy v-if="!copied" :size="15" />
+          <Check v-else :size="15" />
         </button>
       </div>
       <div class="p-3 bg-gray-200 rounded-md max-h-96 overflow-scroll">
-        <div
-            class="flex flex-col"
-            v-for="(product, index) in cartProducts"
-            :key="index"
-        >
-          <p>Nombre: {{ product.title }}.</p>
-          <p v-if="product.selectedSize">Talla: {{ product.selectedSize }}</p>
-          <p>Color: {{ SpanishColors[product.selectedColor as Colors] }}</p>
-          <p>Cantidad: {{ product.quantity }}</p>
-          <div class="flex flex-row gap-2">
-            <p>Precio: </p>
-            <p v-if="product.discount_price">${{product.discount_price}}</p>
-            <p :class="`${product.discount_price ? 'line-through' : ''}`">${{ product.price }}</p>
-          </div>
-          <p>----------------------</p>
-        </div>
-        <p>Total: {{ getCartTotal() }} $</p>
+        <p class="whitespace-pre-line">
+          {{ decodeUrlText(store.getCartInvoiceText()) }}
+        </p>
       </div>
       <DialogFooter>
         <div class="flex flex-col gap-2 w-full">
           <button
-              class="bg-green-500 text-white w-full p-2 rounded-full"
-              @click="goToContacts"
+            class="bg-green-500 text-white w-full p-2 rounded-full"
+            @click="goToContacts"
           >
             Contactar Administrador
           </button>
