@@ -114,7 +114,7 @@ function handleColorChange(color: string) {
       <div class="flex flex-col gap-2">
         <div class="flex flex-row justify-between items-center gap-2">
           <h1
-            class="font-bold text-xl flex-1 max-w-[80%] overflow-ellipsis break-words"
+            class="font-bold text-xl dark:text-white flex-1 max-w-[80%] overflow-ellipsis break-words"
           >
             {{ product.title }}
           </h1>
@@ -129,13 +129,13 @@ function handleColorChange(color: string) {
           product.description
         }}</span>
         <div>
-          <span v-if="product.discount_price" class="text-md font-bold">
+          <span v-if="product.discount_price" class="text-md dark:text-white font-bold">
             ${{ product.discount_price }}
           </span>
           <span
-            class="text-md font-bold"
+            class="text-md font-bold "
             :class="
-              product.discount_price ? 'line-through text-red-700 ml-2' : ''
+              product.discount_price ? 'line-through dark:text-red-700 text-red-700 ml-2' : 'dark:text-white'
             "
           >
             ${{ product.price }}
