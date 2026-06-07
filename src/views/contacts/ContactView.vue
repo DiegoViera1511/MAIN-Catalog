@@ -28,7 +28,7 @@ const store = useProductStore();
           :href="`https://wa.me/5355206726?text=${store.getCartInvoiceText()}`"
           :social-network-icon="MessageCircle"
           text="Link a WhatsApp"
-          identifier="+53 55394122"
+          identifier="+53 55206726"
           text-icon-color="text-green-500"
       />
       <ContactCard
